@@ -127,16 +127,17 @@ public class Tela extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenhaActionPerformed
 
+    // Método chamado ao clicar o botão de entrar
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-    // 1. Captura o que foi digitado nos campos
-    String loginDigitado = txtLogin.getText();
-    String senhaDigitada = new String(txtSenha.getPassword());
+        // 1 Captura o que foi digitado nos campos
+        String loginDigitado = txtLogin.getText();
+        String senhaDigitada = new String(txtSenha.getPassword());
 
-    // 2. Usa as variáveis para preencher o Label
-    txtResultado.setText(
-        "Login digitado: " + loginDigitado + "\n" +
-        "Senha digitada: " + senhaDigitada
-    );// TODO add your handling code here:
+        // 2 Usa as variáveis para preencher o JTextArea
+        txtResultado.setText(
+            "Login digitado: " + loginDigitado + "\n" +
+            "Senha digitada: " + senhaDigitada
+        );
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
