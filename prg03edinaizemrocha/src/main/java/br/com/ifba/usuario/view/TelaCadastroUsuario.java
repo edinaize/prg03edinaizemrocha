@@ -7,6 +7,7 @@ package br.com.ifba.usuario.view;
 import br.com.ifba.login.view.TelaLogin;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
+import br.com.ifba.usuario.entity.Usuario;
 /**
  *
  * @author edina
@@ -46,8 +47,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         txtCpf = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtNome = new javax.swing.JTextPane();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        txtDataNascimento = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtTelefone = new javax.swing.JTextPane();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -58,6 +57,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
         txtConfirmarSenha = new javax.swing.JPasswordField();
+        txtDataNascimento = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,8 +100,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(txtNome);
 
-        jScrollPane4.setViewportView(txtDataNascimento);
-
         jScrollPane5.setViewportView(txtTelefone);
 
         jScrollPane6.setViewportView(txtEmail);
@@ -112,6 +110,9 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Faça o seu cadastro:");
+
+        txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("##/##/####"))));
+        txtDataNascimento.addActionListener(this::txtDataNascimentoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,11 +149,9 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtSenha))
+                            .addComponent(cmbGenero, 0, 180, Short.MAX_VALUE)
+                            .addComponent(txtSenha)
+                            .addComponent(txtDataNascimento))
                         .addGap(62, 62, 62))))
         );
         layout.setVerticalGroup(
@@ -172,10 +171,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,11 +194,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -238,7 +237,18 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     } else if (ValidadorUsuario.contemPalavraProibida(login)) {
 
         JOptionPane.showMessageDialog(this, "Login contém palavra não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
+        
+    // Cria o objeto Usuário com os dados da tela
+    Usuario usuario = new Usuario();
 
+    usuario.nome = nome;
+    usuario.cpf = cpf;
+    usuario.genero = genero;
+    usuario.dataNascimento = dataNascimento;
+    usuario.email = email;
+    usuario.login = login;
+    usuario.senha = senha;
+        
     // Cadastro realizado com sucesso
     } else {
 
@@ -255,6 +265,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         // Fecha a tela de cadastro
         this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataNascimentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,13 +311,12 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPasswordField txtConfirmarSenha;
     private javax.swing.JTextPane txtCpf;
-    private javax.swing.JTextPane txtDataNascimento;
+    private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JTextPane txtEmail;
     private javax.swing.JTextPane txtLogin;
     private javax.swing.JTextPane txtNome;

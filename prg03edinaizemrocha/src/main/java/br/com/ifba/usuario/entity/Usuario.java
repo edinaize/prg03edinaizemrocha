@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.ifba.usuario.entity;
-import br.com.ifba.login.view.TelaLogin;
 
 /**
  *
@@ -11,13 +10,13 @@ import br.com.ifba.login.view.TelaLogin;
  */
 public class Usuario {
     
-    String nome;
-    String cpf;
-    String genero;
-    String dataNascimento;
-    String telefone;
-    String email;
-    String login;
-    String senha;
+    public String nome;
+    public String cpf;
+    public String genero;
+    public String dataNascimento;
+    public String telefone;
+    public String email;
+    public String login;
+    public String senha;
     
 }
