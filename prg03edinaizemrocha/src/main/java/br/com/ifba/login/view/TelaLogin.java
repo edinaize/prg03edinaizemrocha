@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.usuario.view;
+package br.com.ifba.login.view;
 
+import br.com.ifba.usuario.view.TelaCadastroUsuario;
+import br.com.ifba.usuario.entity.Usuario;
 
 /**
  *
@@ -157,11 +159,16 @@ public class TelaLogin extends javax.swing.JFrame {
         String loginDigitado = txtLogin.getText();
         String senhaDigitada = new String(txtSenha.getPassword());
 
-        // 2 Usa as variáveis para preencher o JTextArea
+        // Cria o objeto Usuario com os dados de login
+        Usuario usuario = new Usuario();
+        
+        usuario.login = txtLogin.getText();
+        usuario.senha = new String(txtSenha.getPassword());
+        
+        // Exibe os dados armazenados no objeto Usuario
         txtResultado.setText(
-            "Login digitado: " + loginDigitado + "\n" +
-            "Senha digitada: " + senhaDigitada
-        );
+            "Login digitado: " + usuario.login + "\n" + "Senha digitada: " + usuario.senha);
+        
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
