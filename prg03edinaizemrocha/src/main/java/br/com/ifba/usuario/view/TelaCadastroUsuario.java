@@ -111,7 +111,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Faça o seu cadastro:");
 
-        txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("##/##/####"))));
+        txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         txtDataNascimento.addActionListener(this::txtDataNascimentoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -238,9 +238,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Login contém palavra não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
         
-    // Cria o objeto Usuário com os dados da tela
+    // Instancia o objeto de dominio
     Usuario usuario = new Usuario();
 
+    // Captura e preenche os atributos
     usuario.nome = nome;
     usuario.cpf = cpf;
     usuario.genero = genero;
