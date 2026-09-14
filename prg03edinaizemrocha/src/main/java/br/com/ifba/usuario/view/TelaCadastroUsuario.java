@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.login.view.TelaLogin;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 /**
