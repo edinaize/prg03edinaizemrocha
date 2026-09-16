@@ -220,6 +220,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String senha = new String(txtSenha.getPassword());
         String confirmarSenha = new String(txtConfirmarSenha.getPassword());
 
+  
         // Verifica se algum campo está vazio
     if (nome.isEmpty() || cpf.isEmpty() || genero.equals("Selecione")
             || dataNascimento.isEmpty() || telefone.isEmpty()
@@ -238,23 +239,19 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Login contém palavra não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
         
-    // Instancia o objeto de dominio
-    Usuario usuario = new Usuario();
-
-    // Captura e preenche os atributos
-    usuario.nome = nome;
-    usuario.cpf = cpf;
-    usuario.genero = genero;
-    usuario.dataNascimento = dataNascimento;
-    usuario.email = email;
-    usuario.login = login;
-    usuario.senha = senha;
-        
     // Cadastro realizado com sucesso
     } else {
 
-        JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!", "Sucesso",JOptionPane.INFORMATION_MESSAGE);
+        // Cria o objeto Usuario com os dados principais
+        Usuario usuario = new Usuario(nome,cpf,login, senha);
+
+        // Preenche os atributos
+        usuario.setGenero(genero);
+        usuario.setDataNascimento(dataNascimento);
+        usuario.setTelefone(telefone);
+        usuario.setEmail(email);
         
+        JOptionPane.showMessageDialog(this, "Usuário " + usuario.getNome() + " cadastrado com sucesso!", "Sucesso",JOptionPane.INFORMATION_MESSAGE); 
        }
     }//GEN-LAST:event_jButton1ActionPerformed
 

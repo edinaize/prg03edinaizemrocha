@@ -162,12 +162,12 @@ public class TelaLogin extends javax.swing.JFrame {
         // Cria o objeto Usuario com os dados de login
         Usuario usuario = new Usuario();
         
-        usuario.login = txtLogin.getText();
-        usuario.senha = new String(txtSenha.getPassword());
+        usuario.setLogin(loginDigitado);
+        usuario.setSenha(senhaDigitada);
         
         // Exibe os dados armazenados no objeto Usuario
         txtResultado.setText(
-            "Login digitado: " + usuario.login + "\n" + "Senha digitada: " + usuario.senha);
+            "Login digitado: " + usuario.getLogin() + "\n" + "Senha digitada: " + usuario.getSenha());
         
     }//GEN-LAST:event_btnEntrarActionPerformed
 
