@@ -4,11 +4,13 @@
  */
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.usuario.interfaces.Autenticavel;
+
 /**
  *
  * @author edina
  */
-public class Usuario {
+public class Usuario implements Autenticavel {
     
     private String nome;
     private String cpf;
@@ -95,6 +97,12 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
+    @Override 
+    // Recebe o login e a senha informados
+    public boolean autenticar(String login, String senha) {
+        // Compara os dados informados com os dados do usuário
+        return this.login.equals(login) && this.senha.equals(senha);
+    }
     
 }

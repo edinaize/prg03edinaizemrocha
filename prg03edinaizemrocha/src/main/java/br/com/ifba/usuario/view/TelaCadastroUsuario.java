@@ -221,7 +221,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String confirmarSenha = new String(txtConfirmarSenha.getPassword());
 
   
-        // Verifica se algum campo está vazio
+    // Verifica se algum campo está vazio
     if (nome.isEmpty() || cpf.isEmpty() || genero.equals("Selecione")
             || dataNascimento.isEmpty() || telefone.isEmpty()
             || email.isEmpty() || login.isEmpty()
