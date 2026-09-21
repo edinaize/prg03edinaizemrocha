@@ -9,5 +9,7 @@ package br.com.ifba.usuario.interfaces;
  * @author edina
  */
 public interface Autenticavel {
+    // Valida credenciais do usuário
+    boolean autenticar(String login, String senha);
     
 }
