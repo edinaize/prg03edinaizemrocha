@@ -6,7 +6,8 @@ package br.com.ifba.login.view;
 
 import br.com.ifba.usuario.view.TelaCadastroUsuario;
 import br.com.ifba.usuario.entity.Usuario;
-
+import br.com.ifba.usuario.interfaces.Autenticavel;
+import javax.swing.JOptionPane;
 /**
  *
  * @author edina
@@ -161,14 +162,21 @@ public class TelaLogin extends javax.swing.JFrame {
 
         // Cria o objeto Usuario com os dados de login
         Usuario usuario = new Usuario();
+        // Cria o objeto Usuario de teste, com dados fixos
+        usuario.setLogin("Edinaize");
+        usuario.setSenha("12345");
         
-        usuario.setLogin(loginDigitado);
-        usuario.setSenha(senhaDigitada);
+        // Armazena o resultado da autenticação
+        boolean autenticado = usuario.autenticar(loginDigitado, senhaDigitada);
         
-        // Exibe os dados armazenados no objeto Usuario
-        txtResultado.setText(
-            "Login digitado: " + usuario.getLogin() + "\n" + "Senha digitada: " + usuario.getSenha());
+        // Exibe o que foi digitado
+        txtResultado.setText( "Login digitado: " + loginDigitado + "\n" + "Senha digitada: " + senhaDigitada);
         
+        if (autenticado) {JOptionPane.showMessageDialog(this, "Acesso liberado!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
+        } else {JOptionPane.showMessageDialog(this,"Acesso negado. Login ou senha incorretos.","Erro", JOptionPane.ERROR_MESSAGE);
+        
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
