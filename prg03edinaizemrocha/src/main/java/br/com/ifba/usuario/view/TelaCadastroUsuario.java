@@ -220,39 +220,41 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String senha = new String(txtSenha.getPassword());
         String confirmarSenha = new String(txtConfirmarSenha.getPassword());
 
-  
-    // Verifica se algum campo está vazio
-    if (nome.isEmpty() || cpf.isEmpty() || genero.equals("Selecione")
-            || dataNascimento.isEmpty() || telefone.isEmpty()
-            || email.isEmpty() || login.isEmpty()
-            || senha.isEmpty() || confirmarSenha.isEmpty()) {
+        // Valida os dados preenchidos pelo usuário antes de realizar o cadastro
+        if (!ValidadorUsuario.camposPreenchidos(nome, cpf, dataNascimento, telefone, email, login, senha, confirmarSenha)
+           || genero.equals("Selecione")) {
 
-        JOptionPane.showMessageDialog(this,"Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
 
-    // Verifica se as senhas são iguais
-    } else if (!senha.equals(confirmarSenha)) {
+        } else if (!ValidadorUsuario.cpfValido(cpf)) {
 
-        JOptionPane.showMessageDialog(this, "As senhas não coincidem.","Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "CPF inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
 
-    // Verifica se o login contém palavra proibida
-    } else if (ValidadorUsuario.contemPalavraProibida(login)) {
+        } else if (!ValidadorUsuario.senhasConferem(senha, confirmarSenha)) {
 
-        JOptionPane.showMessageDialog(this, "Login contém palavra não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
-        
-    // Cadastro realizado com sucesso
-    } else {
+            JOptionPane.showMessageDialog(this, "As senhas não coincidem.", "Erro", JOptionPane.ERROR_MESSAGE);
 
-        // Cria o objeto Usuario com os dados principais
-        Usuario usuario = new Usuario(nome,cpf,login, senha);
+        } else if (!ValidadorUsuario.senhaForte(senha)) {
 
-        // Preenche os atributos
-        usuario.setGenero(genero);
-        usuario.setDataNascimento(dataNascimento);
-        usuario.setTelefone(telefone);
-        usuario.setEmail(email);
-        
-        JOptionPane.showMessageDialog(this, "Usuário " + usuario.getNome() + " cadastrado com sucesso!", "Sucesso",JOptionPane.INFORMATION_MESSAGE); 
-       }
+            JOptionPane.showMessageDialog(this, "Senha muito curta. Use pelo menos 6 caracteres.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+        } else if (ValidadorUsuario.contemPalavraProibida(login)) {
+
+            JOptionPane.showMessageDialog(this, "Login contém palavra não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            // Cria um objeto Usuario com os dados principais
+            Usuario usuario = new Usuario(nome, cpf, login, senha);
+            // Define os demais dados do usuário
+            usuario.setGenero(genero);
+            usuario.setDataNascimento(dataNascimento);
+            usuario.setTelefone(telefone);
+            usuario.setEmail(email);
+
+            // Exibe uma mensagem confirmando o cadastro
+            JOptionPane.showMessageDialog(this, "Usuário " + usuario.getNome() + " cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
