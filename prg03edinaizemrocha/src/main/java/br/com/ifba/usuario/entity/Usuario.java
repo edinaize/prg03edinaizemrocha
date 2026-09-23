@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.perfil.entity.Perfil;
 import br.com.ifba.usuario.interfaces.Autenticavel;
 
 /**
@@ -20,6 +21,9 @@ public class Usuario implements Autenticavel {
     private String email;
     private String login;
     private String senha;
+    
+    // Perfil associado ao usuário
+    private Perfil perfil;
 
     // Construtor vazio
     public Usuario() {
@@ -97,6 +101,17 @@ public class Usuario implements Autenticavel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    // Retorna o perfil do usuário
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    // Define o perfil do usuário
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+    
 
     @Override 
     // Recebe o login e a senha informados
