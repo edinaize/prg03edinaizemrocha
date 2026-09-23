@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.perfil.entity.Perfil;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,5 +25,15 @@ public class UsuarioTest {
         Usuario usuario = new Usuario("Edinaize", "52998224725", "edinaize", "senha123");
  
         assertFalse(usuario.autenticar("edinaize", "senhaErrada"));
+    }
+    
+    @Test
+    public void deveRetornarPerfilRelacionado() {
+        Usuario usuario = new Usuario();
+        Perfil perfil = new Perfil();
+
+        usuario.setPerfil(perfil);
+
+        assertSame(perfil, usuario.getPerfil());
     }
 }
