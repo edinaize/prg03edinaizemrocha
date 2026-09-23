@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.perfil.entity.Perfil;
 import br.com.ifba.usuario.interfaces.Autenticavel;
 
 /**
