@@ -120,4 +120,8 @@ public class Usuario implements Autenticavel {
         return this.login.equals(login) && this.senha.equals(senha);
     }
     
+    // Descreve o perfil do usuário
+    public String descreverPerfil() {
+        return "Usuario: " + nome;
+    }
 }

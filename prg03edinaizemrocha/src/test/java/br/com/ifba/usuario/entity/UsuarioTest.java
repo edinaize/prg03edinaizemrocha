@@ -36,4 +36,12 @@ public class UsuarioTest {
 
         assertSame(perfil, usuario.getPerfil());
     }
+    
+    // Testa a descrição padrão do Usuario
+    @Test
+    void descreverPerfil_retornaDescricaoDoUsuario() {
+        Usuario usuario = new Usuario( "Carla", "12345678900", "carla", "senha123");
+
+        assertEquals("Usuario: Carla", usuario.descreverPerfil());
+    }
 }

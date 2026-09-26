@@ -22,7 +22,7 @@ public class Artista extends Usuario {
     private String localizacao;
  
     // Lista de obras do artista
-    private List<Obra> obras = new ArrayList<>();
+    private final List<Obra> obras = new ArrayList<>();
  
     // Construtor
     public Artista() {
@@ -68,5 +68,11 @@ public class Artista extends Usuario {
     // Retorna a lista de obras somente para leitura
     public List<Obra> getObras() {
         return Collections.unmodifiableList(obras);
+    }
+    
+    // Sobrescreve a descrição do perfil para o artista
+    @Override
+    public String descreverPerfil(){
+        return "Artista: " + getNome() + " (" + estilo +")";
     }
 }
