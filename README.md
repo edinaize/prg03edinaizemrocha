@@ -1,6 +1,6 @@
 # Rede Social para Artistas Visuais Brasileiros
 
-**Autores:** Edinaize Machado Rocha
+**Autor:** Edinaize Machado Rocha
 
 Projeto de uma plataforma digital voltada à divulgação e valorização da arte brasileira, desenvolvida para permitir que artistas visuais publiquem e organizem suas obras, enquanto usuários interessados em arte podem descobrir artistas, visualizar obras e interagir com as publicações.
 
