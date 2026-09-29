@@ -180,7 +180,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     // Processa a autenticação pelo tipo geral
-    static boolean processar(Autenticavel pessoa, String login, String senha) {
+    public static boolean processar(Autenticavel pessoa, String login, String senha) {
         return pessoa.autenticar(login, senha);
     }
     
