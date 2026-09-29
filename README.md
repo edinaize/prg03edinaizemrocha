@@ -2,7 +2,7 @@
 
 
 
-\*\*Autores:\*\* Edinaize Machado Rocha
+\*\*Autor:\*\* Edinaize Machado Rocha
 
 
 
@@ -89,6 +89,8 @@ Usuário que possui um perfil de artista e pode, além das funcionalidades comun
 \- \*\*Usuário:\*\* pessoa cadastrada na plataforma.
 
 \- \*\*Artista:\*\* usuário que possui perfil artístico e pode publicar obras.
+
+\- \*\*Perfil:\*\* informações de apresentação do usuário, como foto e biografia.
 
 \- \*\*Obra:\*\* conteúdo artístico publicado por um artista.
 

@@ -75,4 +75,11 @@ public class Artista extends Usuario {
     public String descreverPerfil(){
         return "Artista: " + getNome() + " (" + estilo +")";
     }
+    
+    @Override
+    public boolean autenticar(String login, String senha) {
+        boolean credenciaisValidas = super.autenticar(login, senha);
+        boolean perfilArtisticoCompleto = estilo != null && !estilo.isBlank();
+        return credenciaisValidas && perfilArtisticoCompleto;
+    }
 }

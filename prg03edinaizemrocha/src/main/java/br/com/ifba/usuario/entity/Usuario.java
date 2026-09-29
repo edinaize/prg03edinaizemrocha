@@ -111,7 +111,6 @@ public class Usuario implements Autenticavel {
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
-    
 
     @Override 
     // Recebe o login e a senha informados
