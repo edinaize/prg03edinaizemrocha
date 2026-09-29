@@ -37,6 +37,19 @@ public class Usuario implements Autenticavel {
         this.senha = senha;
     }
 
+    // Construtor com todos os campos
+    public Usuario(String nome, String cpf, String genero, String dataNascimento, String telefone, String email, String login, String senha, Perfil perfil) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.genero = genero;
+        this.dataNascimento = dataNascimento;
+        this.telefone = telefone;
+        this.email = email;
+        this.login = login;
+        this.senha = senha;
+        this.perfil = perfil;
+    }
+
     // Getters e setters dos atributos
     public String getNome() {
         return nome;
@@ -123,4 +136,5 @@ public class Usuario implements Autenticavel {
     public String descreverPerfil() {
         return "Usuario: " + nome;
     }
+    
 }

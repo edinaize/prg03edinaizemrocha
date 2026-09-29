@@ -152,3 +152,11 @@ As seguintes funcionalidades não fazem parte do escopo atual e poderão ser imp
 
 Projeto em desenvolvimento para a disciplina de Programação Orientada a Objetos.
 
+
+
+O construtor apenas com os campos obrigatórios, permite realizar um cadastro rápido quando somente esses dados estão disponíveis.
+
+O construtor com todos os campos permite criar o usuário com o cadastro completo, evitando a necessidade de preencher os demais dados posteriormente com vários `setters`.
+
+
+
