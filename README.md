@@ -1,4 +1,4 @@
-\# Rede Social para Artistas Visuais Brasileiros
+## Rede Social para Artistas Visuais Brasileiros
 
 **Autor:** Edinaize Machado Rocha
 
