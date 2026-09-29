@@ -1,4 +1,9 @@
-# Rede Social para Artistas Visuais Brasileiros
+\# Rede Social para Artistas Visuais Brasileiros
+
+
+
+\*\*Autor:\*\* Edinaize Machado Rocha
+
 
 **Autor:** Edinaize Machado Rocha
 
@@ -50,7 +55,29 @@ Usuário que possui um perfil de artista e pode, além das funcionalidades comun
 - **Curtida:** interação realizada por um usuário em uma obra.
 - **Comentário:** texto publicado por um usuário em uma obra.
 
-## Estrutura do projeto
+\## Principais entidades
+
+
+
+\- \*\*Usuário:\*\* pessoa cadastrada na plataforma.
+
+\- \*\*Artista:\*\* usuário que possui perfil artístico e pode publicar obras.
+
+\- \*\*Perfil:\*\* informações de apresentação do usuário, como foto e biografia.
+
+\- \*\*Obra:\*\* conteúdo artístico publicado por um artista.
+
+\- \*\*Categoria:\*\* classificação utilizada para organizar as obras.
+
+\- \*\*Curtida:\*\* interação realizada por um usuário em uma obra.
+
+\- \*\*Comentário:\*\* texto publicado por um usuário em uma obra.
+
+
+
+\## Estrutura do projeto
+
+
 
 O projeto será desenvolvido em Java utilizando o NetBeans, seguindo uma organização orientada a objetos.
 
@@ -65,9 +92,33 @@ A estrutura poderá ser organizada em componentes responsáveis pela interface, 
 
 As seguintes funcionalidades não fazem parte do escopo atual e poderão ser implementadas futuramente:
 
-- Mensagens diretas entre usuários
-- Seguir e deixar de seguir perfis
-- Feed personalizado "Para Você"
-- Notificações
-- Detecção de obras geradas por inteligência artificial
-- Captura e anexo de imagens durante a publicação de obras
+
+
+\- Mensagens diretas entre usuários
+
+\- Seguir e deixar de seguir perfis
+
+\- Feed personalizado "Para Você"
+
+\- Notificações
+
+\- Detecção de obras geradas por inteligência artificial
+
+\- Captura e anexo de imagens durante a publicação de obras
+
+
+
+\## Status
+
+
+
+Projeto em desenvolvimento para a disciplina de Programação Orientada a Objetos.
+
+
+
+O construtor apenas com os campos obrigatórios, permite realizar um cadastro rápido quando somente esses dados estão disponíveis.
+
+O construtor com todos os campos permite criar o usuário com o cadastro completo, evitando a necessidade de preencher os demais dados posteriormente com vários `setters`.
+
+
+

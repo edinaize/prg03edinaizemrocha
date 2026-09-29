@@ -167,7 +167,7 @@ public class TelaLogin extends javax.swing.JFrame {
         usuario.setSenha("12345");
         
         // Armazena o resultado da autenticação
-        boolean autenticado = usuario.autenticar(loginDigitado, senhaDigitada);
+        boolean autenticado = processar(usuario, loginDigitado, senhaDigitada);
         
         // Exibe o que foi digitado
         txtResultado.setText( "Login digitado: " + loginDigitado + "\n" + "Senha digitada: " + senhaDigitada);
@@ -179,6 +179,11 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
+    // Processa a autenticação pelo tipo geral
+    public static boolean processar(Autenticavel pessoa, String login, String senha) {
+        return pessoa.autenticar(login, senha);
+    }
+    
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginActionPerformed
