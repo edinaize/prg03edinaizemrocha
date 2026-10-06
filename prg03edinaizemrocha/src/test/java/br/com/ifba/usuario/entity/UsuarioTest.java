@@ -44,4 +44,16 @@ public class UsuarioTest {
 
         assertEquals("Usuario: Carla", usuario.descreverPerfil());
     }
+    
+    @Test
+    void usuariosComMesmoLogin_saoConsideradosIguaisNaLista() {
+        Usuario usuario1 = new Usuario("Ana", "11111111111", "ana", "123456");
+        Usuario usuario2 = new Usuario("Bruno", "22222222222", "ana", "654321");
+
+        java.util.List<Usuario> usuarios = new java.util.ArrayList<>();
+
+        usuarios.add(usuario1);
+
+        assertTrue(usuarios.contains(usuario2));
+    }
 }
