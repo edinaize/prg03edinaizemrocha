@@ -98,5 +98,7 @@ O construtor apenas com os campos obrigatórios, permite realizar um cadastro r�
 
 O construtor com todos os campos permite criar o usuário com o cadastro completo, evitando a necessidade de preencher os demais dados posteriormente com vários `setters`.
 
-
+## Atividade 15
+- Com 10 usuários, tanto a lista quanto o Map são rápidos e a diferença é imperceptível.
+- Com 10.000 usuários, a lista fica lenta porque precisa procurar um por um, enquanto o Map é mais eficiente encontra instantaneamente.
 
