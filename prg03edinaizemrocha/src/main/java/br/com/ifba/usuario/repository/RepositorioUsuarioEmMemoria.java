@@ -23,6 +23,11 @@ public class RepositorioUsuarioEmMemoria {
     
     // Cadastra um usuário no repositório
     public void cadastrar(Usuario usuario) {
+        
+        // Evita indexar usuário ou login nulo no Map
+         if (usuario == null || usuario.getLogin() == null) {
+            throw new IllegalArgumentException("Usuário e login não podem ser nulos.");
+        }
         // Impede o cadastro de login duplicado
         if (porLogin.containsKey(usuario.getLogin())) {
             throw new IllegalArgumentException("Já existe um usuário cadastrado com o login: " + usuario.getLogin());
