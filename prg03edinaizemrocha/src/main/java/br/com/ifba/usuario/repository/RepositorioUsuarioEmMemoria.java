@@ -23,6 +23,11 @@ public class RepositorioUsuarioEmMemoria {
     
     // Cadastra um usuário no repositório
     public void cadastrar(Usuario usuario) {
+        // Impede o cadastro de login duplicado
+        if (porLogin.containsKey(usuario.getLogin())) {
+            throw new IllegalArgumentException("Já existe um usuário cadastrado com o login: " + usuario.getLogin());
+        }
+        
         usuarios.add(usuario);
         porLogin.put(usuario.getLogin(), usuario);
     }
