@@ -6,24 +6,49 @@ package br.com.ifba.usuario.entity;
 
 import br.com.ifba.perfil.entity.Perfil;
 import br.com.ifba.usuario.interfaces.Autenticavel;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.util.Objects;
 
 /**
  *
  * @author edina
  */
+@Entity
+@Table(name = "usuarios")
 public class Usuario implements Autenticavel {
+    // Chave primária
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     
+    @Column(nullable = false)
     private String nome;
+    
+    @Column(nullable = false, unique = true, length = 14)
     private String cpf;
+    
     private String genero;
+    @Column(name = "data_nascimento")
     private String dataNascimento;
+    
     private String telefone;
     private String email;
+    
+    // Login é a identidade do usuário
+    @Column(nullable = false, unique = true)
     private String login;
+    
+    @Column(nullable = false)
     private String senha;
     
     // Perfil associado ao usuário
+    @Transient
     private Perfil perfil;
 
     // Construtor vazio

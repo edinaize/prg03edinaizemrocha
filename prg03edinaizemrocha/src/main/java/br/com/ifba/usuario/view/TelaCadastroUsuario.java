@@ -8,6 +8,7 @@ import br.com.ifba.login.view.TelaLogin;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.repository.RepositorioUsuarioEmMemoria;
 /**
  *
  * @author edina
@@ -16,6 +17,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
+    private final RepositorioUsuarioEmMemoria repositoriousuario = new RepositorioUsuarioEmMemoria();
     /**
      * Creates new form TelaCadastroUsuario
      */
@@ -252,8 +254,17 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             usuario.setTelefone(telefone);
             usuario.setEmail(email);
 
-            // Exibe uma mensagem confirmando o cadastro
-            JOptionPane.showMessageDialog(this, "Usuário " + usuario.getNome() + " cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
+            try{
+                // Guarda o usuário no repositório em vez de deixá-lo só na variável local
+                repositoriousuario.cadastrar(usuario);
+                // Exibe uma mensagem confirmando o cadastro
+                JOptionPane.showMessageDialog(this, "Usuário " + usuario.getNome() + " cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
+            } catch (IllegalArgumentException e){
+                // Lançada pelo repositório quando o login já existe
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
