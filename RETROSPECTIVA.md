@@ -1,0 +1,2 @@
+Na tela de listagem, atributos sensíveis como senha e CPF não devem ser exibidos, pois não são necessários para a consulta.
+Devem ser mostradas apenas informações relevantes, como nome, login e e-mail, deixando os demais dados para as telas de cadastro e edição.
