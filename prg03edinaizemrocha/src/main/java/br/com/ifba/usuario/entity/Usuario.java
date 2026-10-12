@@ -26,18 +26,24 @@ public class Usuario implements Autenticavel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     @Column(nullable = false)
     private String nome;
+    
     @Column(nullable = false, unique = true, length = 14)
     private String cpf;
+    
     private String genero;
     @Column(name = "data_nascimento")
     private String dataNascimento;
+    
     private String telefone;
     private String email;
+    
     // Login é a identidade do usuário
     @Column(nullable = false, unique = true)
     private String login;
+    
     @Column(nullable = false)
     private String senha;
     
