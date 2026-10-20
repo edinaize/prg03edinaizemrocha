@@ -5,6 +5,7 @@
 package br.com.ifba.usuario.repository;
 
 import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.exception.UsuarioNaoEncontradoException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,11 +48,15 @@ public class RepositorioUsuarioEmMemoria {
     }
     // Busca o usuário percorrendo a lista
     public Usuario buscarPorLoginComVarredura(String login) {
+        // Percorre a lista procurando o login informado
         for (Usuario usuario : usuarios) {
             if (usuario.getLogin().equals(login)) {
                 return usuario;
             }
         }
-        return null;
+
+        // Informa explicitamente quando o usuário não existe.
+        throw new UsuarioNaoEncontradoException("Não existe usuário com o login: " + login
+        );
     }
 }
