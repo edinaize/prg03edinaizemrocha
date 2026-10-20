@@ -75,11 +75,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
             preencherTabela(usuarios);
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(
-                    this,
-                    "Erro ao carregar usuários: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
+                    this,"Erro ao carregar usuários: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -102,7 +98,22 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
             });
         }
     }
+    
+    private void pesquisarUsuarios() {
+        String busca = TextBuscar.getText().trim();
 
+        if (busca.isEmpty() || busca.equals("Digite aqui...")) {
+            carregarUsuarios();
+            return;
+        }
+
+        try {
+            preencherTabela(repositorio.buscarPorNome(busca));
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                this,"Erro ao buscar usuários: " + e.getMessage(),"Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -245,27 +256,8 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     }//GEN-LAST:event_TextBuscarActionPerformed
 
     private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
-        String busca = TextBuscar.getText().trim().toLowerCase();
-
-        try {
-            List<Usuario> usuarios = repositorio.listarTodos();
-
-            List<Usuario> filtrados = usuarios.stream()
-                    .filter(u ->
-                            (u.getNome() != null
-                            && u.getNome().toLowerCase().contains(busca))
-                            || (u.getLogin() != null
-                            && u.getLogin().toLowerCase().contains(busca))
-                            || (u.getEmail() != null
-                            && u.getEmail().toLowerCase().contains(busca))
-                    )
-                    .toList();
-
-            preencherTabela(filtrados);
-
-        } catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao buscar usuários: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
-        }
+        
+        pesquisarUsuarios();
     }//GEN-LAST:event_jBuscarActionPerformed
 
     private void jBtcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtcadastrarActionPerformed
@@ -275,7 +267,47 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtcadastrarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
+        int linha = jTable1.rowAtPoint(evt.getPoint());
+        int coluna = jTable1.columnAtPoint(evt.getPoint());
+
+        if (linha == -1) {
+            return;
+        }
+
+        long id = ((Number) jTable1.getValueAt(linha, 6)).longValue();
+
+        // Remover usuário
+        if (coluna == 4) {
+            int resposta = JOptionPane.showConfirmDialog(
+                this,"Deseja realmente remover este usuário?","Confirmar exclusão",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    repositorio.excluir(id);
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Usuário removido com sucesso!"
+                    );
+                    pesquisarUsuarios();
+
+                } catch (RuntimeException e) {
+                    JOptionPane.showMessageDialog(
+                        this,"Erro ao remover usuário: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        }
+
+        // Editar usuário
+        else if (coluna == 5) {
+            Usuario usuario = repositorio.buscarPorId(id);
+
+            if (usuario != null) {
+                TelaCadastroUsuario tela = new TelaCadastroUsuario(usuario);
+                tela.setVisible(true);
+                this.dispose();
+            }
+        } // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**

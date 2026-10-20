@@ -102,4 +102,23 @@ public class UsuarioRepository {
             em.close();
         }
     }
+    
+    // Busca usuários pelo nome
+    public List<Usuario> buscarPorNome(String nome) {
+            EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                "SELECT u FROM Usuario u "
+                + "WHERE LOWER(u.nome) LIKE LOWER(:nome) "
+                + "ORDER BY u.nome",
+                Usuario.class
+            )
+            .setParameter("nome", "%" + nome.trim() + "%")
+            .getResultList();
+
+        } finally {
+            em.close();
+        }
+    }    
 }
