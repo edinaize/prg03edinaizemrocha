@@ -6,6 +6,7 @@ br\com\ifba\obra\entity\Obra.class
 br\com\ifba\usuario\entity\Usuario.class
 br\com\ifba\perfil\entity\Perfil.class
 br\com\ifba\usuario\view\TelaUsuarioListar$2.class
+br\com\ifba\infrastructure\util\JPAUtil.class
 br\com\ifba\usuario\repository\RepositorioUsuarioEmMemoria.class
 br\com\ifba\usuario\view\TelaUsuarioListar.class
 br\com\ifba\usuario\view\TelaUsuarioListar$3.class
@@ -13,3 +14,5 @@ br\com\ifba\usuario\interfaces\Autenticavel.class
 br\com\ifba\usuario\view\TelaUsuarioListar$1.class
 br\com\ifba\artista\entity\Artista.class
 br\com\ifba\login\view\TelaLogin$1.class
+br\com\ifba\usuario\repository\UsuarioRepository.class
+br\com\ifba\usuario\view\TelaUsuarioListar$4.class
