@@ -4,11 +4,14 @@
  */
 package br.com.ifba.usuario.view;
 
+import jakarta.persistence.PersistenceException;
 import br.com.ifba.login.view.TelaLogin;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.repository.RepositorioUsuarioEmMemoria;
+import br.com.ifba.usuario.exception.UsuarioInvalidoException;
+import br.com.ifba.usuario.repository.UsuarioRepository;
+
 /**
  *
  * @author edina
@@ -17,12 +20,35 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
-    private final RepositorioUsuarioEmMemoria repositoriousuario = new RepositorioUsuarioEmMemoria();
+    private final UsuarioRepository repositorio = new UsuarioRepository();
+    private Usuario usuarioEdicao = null;
+    
     /**
      * Creates new form TelaCadastroUsuario
+     * 
      */
     public TelaCadastroUsuario() {
         initComponents();
+    }
+    
+    public TelaCadastroUsuario(Usuario usuario) {
+        initComponents();
+        
+        usuarioEdicao = usuario;
+
+        jLabel10.setText("Editar usuário:");
+        jButton1.setText("Salvar alterações");
+
+        txtNome.setText(usuario.getNome());
+        txtCpf.setText(usuario.getCpf());
+        cmbGenero.setSelectedItem(usuario.getGenero());
+        txtDataNascimento.setText(usuario.getDataNascimento());
+        txtTelefone.setText(usuario.getTelefone());
+        txtEmail.setText(usuario.getEmail());
+        txtLogin.setText(usuario.getLogin());
+
+        txtSenha.setText("");
+        txtConfirmarSenha.setText("");
     }
 
     /**
@@ -246,26 +272,67 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
         } else {
 
-            // Cria um objeto Usuario com os dados principais
-            Usuario usuario = new Usuario(nome, cpf, login, senha);
-            // Define os demais dados do usuário
-            usuario.setGenero(genero);
-            usuario.setDataNascimento(dataNascimento);
-            usuario.setTelefone(telefone);
-            usuario.setEmail(email);
+            try {
+                Usuario usuario;
+                boolean editando = usuarioEdicao != null;
 
-            
-            try{
-                // Guarda o usuário no repositório em vez de deixá-lo só na variável local
-                repositoriousuario.cadastrar(usuario);
-                // Exibe uma mensagem confirmando o cadastro
-                JOptionPane.showMessageDialog(this, "Usuário " + usuario.getNome() + " cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
-            } catch (IllegalArgumentException e){
-                // Lançada pelo repositório quando o login já existe
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                if (editando) {
+                    usuario = usuarioEdicao;
+
+                    usuario.setNome(nome);
+                    usuario.setCpf(cpf);
+                    usuario.setLogin(login);
+
+                    if (!senha.isEmpty()) {
+                        usuario.setSenha(senha);
+                    }
+                } else {
+                    usuario = new Usuario(nome, cpf, login, senha);
+                }
+
+                usuario.setGenero(genero);
+                usuario.setDataNascimento(dataNascimento);
+                usuario.setTelefone(telefone);
+                usuario.setEmail(email);
+
+                if (editando) {
+                    repositorio.atualizar(usuario);
+                } else {
+                    repositorio.cadastrar(usuario);
+                }
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    editando ? "Usuário atualizado com sucesso!"
+                             : "Usuário cadastrado com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+                new TelaUsuarioListar().setVisible(true);
+                this.dispose();
+
+            } catch (UsuarioInvalidoException e) {
+                JOptionPane.showMessageDialog(
+                    this, e.getMessage(), "Dados inválidos",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            } catch (PersistenceException e) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Não foi possível salvar. Verifique os dados e a conexão com o banco.",
+                    "Erro ao salvar",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            } catch (RuntimeException e) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ocorreu um erro ao salvar o usuário: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+                );
             }
-        }
+        }   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -274,7 +341,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         telaLogin.setVisible(true);
         
         // Fecha a tela de cadastro
-        this.dispose();    // TODO add your handling code here:
+        this.dispose();  
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataNascimentoActionPerformed
@@ -301,6 +369,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+  
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new TelaCadastroUsuario().setVisible(true));

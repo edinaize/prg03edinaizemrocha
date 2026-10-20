@@ -1,5 +1,0 @@
-br\com\ifba\usuario\validar\ValidadorUsuarioTest.class
-br\com\ifba\artista\entity\ArtistaTest.class
-br\com\ifba\obra\entity\ObraTest.class
-br\com\ifba\usuario\repository\RepositorioUsuarioEmMemoriaTest.class
-br\com\ifba\usuario\entity\UsuarioTest.class
