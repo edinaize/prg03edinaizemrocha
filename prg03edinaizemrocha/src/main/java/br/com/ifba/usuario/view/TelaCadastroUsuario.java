@@ -4,10 +4,12 @@
  */
 package br.com.ifba.usuario.view;
 
+import jakarta.persistence.PersistenceException;
 import br.com.ifba.login.view.TelaLogin;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import br.com.ifba.usuario.repository.UsuarioRepository;
 
 /**
@@ -247,24 +249,46 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
         } else {
 
-            // Cria um objeto Usuario com os dados principais
-            Usuario usuario = new Usuario(nome, cpf, login, senha);
-            // Define os demais dados do usuário
-            usuario.setGenero(genero);
-            usuario.setDataNascimento(dataNascimento);
-            usuario.setTelefone(telefone);
-            usuario.setEmail(email);
+        // Cria o usuário com os dados informados no formulário.
+        Usuario usuario = new Usuario(nome, cpf, login, senha);
+        usuario.setGenero(genero);
+        usuario.setDataNascimento(dataNascimento);
+        usuario.setTelefone(telefone);
+        usuario.setEmail(email);
 
-            
-            try{
-                // Guarda o usuário no repositório em vez de deixá-lo só na variável local
-                repositorio.cadastrar(usuario);
-                // Exibe uma mensagem confirmando o cadastro
-                JOptionPane.showMessageDialog(this, "Usuário " + usuario.getNome() + " cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
-            } catch (IllegalArgumentException e){
-                // Lançada pelo repositório quando o login já existe
-                JOptionPane.showMessageDialog(this, "Erro ao cadastrar usuário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        try {
+            repositorio.cadastrar(usuario);
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Usuário cadastrado com sucesso!",
+                        "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+            } catch (UsuarioInvalidoException e) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        e.getMessage(),
+                        "Dados inválidos",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+            } catch (PersistenceException e) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Não foi possível salvar. Verifique os dados e a conexão com o banco.",
+                        "Erro ao salvar",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+            } catch (RuntimeException e) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Ocorreu um erro ao salvar o usuário.",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -275,7 +299,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         telaLogin.setVisible(true);
         
         // Fecha a tela de cadastro
-        this.dispose();    // TODO add your handling code here:
+        this.dispose();  
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataNascimentoActionPerformed

@@ -17,23 +17,25 @@ import java.util.List;
 public class UsuarioRepository {
     
     // Cadastra um novo usuário
-    public void cadastrar(Usuario u) {
+    public void cadastrar(Usuario usuario) {
         EntityManager em = JPAUtil.getEntityManager();
-        EntityTransaction transacao = em.getTransaction();
 
         try {
-            transacao.begin();
-            em.persist(u);
-            transacao.commit();
+            em.getTransaction().begin();
+            em.persist(usuario);
+            em.getTransaction().commit();
+
         } catch (RuntimeException e) {
-            if (transacao.isActive()) {
-                transacao.rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw e;
+
         } finally {
             em.close();
         }
     }
+
 
     // Busca um usuário pelo ID
     public Usuario buscarPorId(long id) {
