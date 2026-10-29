@@ -293,7 +293,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 usuario.setGenero(genero);
                 usuario.setDataNascimento(dataNascimento);
                 usuario.setTelefone(telefone);
-                usuario.setEmail(email);
+                usuario.setEmail(email.trim().isEmpty() ? null : email.trim());
 
                 if (editando) {
                     repositorio.atualizar(usuario);

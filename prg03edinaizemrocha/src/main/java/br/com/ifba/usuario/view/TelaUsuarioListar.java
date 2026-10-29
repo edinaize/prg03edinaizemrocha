@@ -91,7 +91,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
                 usuario.getNome(),
                 usuario.getLogin(),
                 usuario.getEmail(),
-                "Usuário",
+                usuario.getTipoPerfil().getDescricao(),
                 "",
                 "",
                 usuario.getId()
