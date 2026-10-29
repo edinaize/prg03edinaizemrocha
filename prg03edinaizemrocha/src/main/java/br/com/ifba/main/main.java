@@ -11,7 +11,7 @@ import br.com.ifba.usuario.view.TelaUsuarioListar;
  *
  * @author edina
  */
-public class main {
+public class Main {
     
      public static void main(String[] args) {
         FlywayUtil.migrar();   // primeiro o banco, depois a tela
