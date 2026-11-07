@@ -8,6 +8,14 @@ package br.com.ifba.infrastructure.exception;
  *
  * @author edina
  */
-public class DaoException {
+public class DaoException extends RuntimeException{
+
+    public DaoException(String mensagem) {
+        super(mensagem);
+    }
+
+    public DaoException(String mensagem, Throwable causa) {
+        super(mensagem, causa);
+    }
    
 }
