@@ -4,15 +4,13 @@
  */
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.perfil.entity.Perfil;
 import br.com.ifba.usuario.interfaces.Autenticavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.util.Objects;
@@ -23,11 +21,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements Autenticavel {
-    // Chave primária
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Usuario extends PersistenceEntity implements Autenticavel {
     
     @Column(nullable = false)
     private String nome;
@@ -166,14 +160,6 @@ public class Usuario implements Autenticavel {
     // Define o perfil do usuário
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
-    }
-    // Retorna o identificador do usuário
-    public long getId() {
-        return id;
-    }
-    // Define o identificador do usuário
-    public void setId(long id) {
-        this.id = id;
     }
 
     @Override 
