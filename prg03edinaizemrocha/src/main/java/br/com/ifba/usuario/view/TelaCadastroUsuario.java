@@ -4,13 +4,14 @@
  */
 package br.com.ifba.usuario.view;
 
-import jakarta.persistence.PersistenceException;
+import br.com.ifba.infrastructure.exception.DaoException;
 import br.com.ifba.login.view.TelaLogin;
+import br.com.ifba.usuario.dao.UsuarioDao;
+import br.com.ifba.usuario.dao.UsuarioIDao;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
-import br.com.ifba.usuario.repository.UsuarioRepository;
 
 /**
  *
@@ -19,8 +20,9 @@ import br.com.ifba.usuario.repository.UsuarioRepository;
 public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
-
-    private final UsuarioRepository repositorio = new UsuarioRepository();
+   
+    // DAO responsável pelo acesso aos dados do usuário
+    private final UsuarioIDao dao = new UsuarioDao();
     private Usuario usuarioEdicao = null;
     
     /**
@@ -296,9 +298,9 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 usuario.setEmail(email);
 
                 if (editando) {
-                    repositorio.atualizar(usuario);
+                    dao.update(usuario);
                 } else {
-                    repositorio.cadastrar(usuario);
+                    dao.save(usuario);
                 }
 
                 JOptionPane.showMessageDialog(
@@ -317,7 +319,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     this, e.getMessage(), "Dados inválidos",
                     JOptionPane.ERROR_MESSAGE
                 );
-            } catch (PersistenceException e) {
+            } catch (DaoException e) {
                 JOptionPane.showMessageDialog(
                     this,
                     "Não foi possível salvar. Verifique os dados e a conexão com o banco.",

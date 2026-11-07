@@ -1,5 +1,8 @@
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.infrastructure.exception.DaoException;
+import br.com.ifba.usuario.dao.UsuarioDao;
+import br.com.ifba.usuario.dao.UsuarioIDao;
 import br.com.ifba.usuario.entity.Usuario;
 import java.awt.Component;
 import java.util.List;
@@ -9,13 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import br.com.ifba.usuario.repository.UsuarioRepository;
 
 
 
 public class TelaUsuarioListar extends javax.swing.JFrame {
-    
-    private final UsuarioRepository repositorio = new UsuarioRepository();
+    // DAO responsável pelo acesso aos dados do usuário
+    private final UsuarioIDao dao = new UsuarioDao();
     
     public TelaUsuarioListar() {
         initComponents();
@@ -71,11 +73,10 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     // Busca os usuários cadastrados no banco.
     private void carregarUsuarios() {
         try {
-            List<Usuario> usuarios = repositorio.listarTodos();
-            preencherTabela(usuarios);
-        } catch (RuntimeException e) {
+            preencherTabela(dao.findAll());
+        } catch (DaoException e) {
             JOptionPane.showMessageDialog(
-                    this,"Erro ao carregar usuários: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
+                    this, "Erro ao carregar usuários: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -108,10 +109,10 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
         }
 
         try {
-            preencherTabela(repositorio.buscarPorNome(busca));
-        } catch (RuntimeException e) {
+            preencherTabela(dao.buscarPorNome(busca));
+        } catch (DaoException e) {
             JOptionPane.showMessageDialog(
-                this,"Erro ao buscar usuários: " + e.getMessage(),"Erro", JOptionPane.ERROR_MESSAGE);
+                this, "Erro ao buscar usuários: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -283,24 +284,19 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
-                    repositorio.excluir(id);
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Usuário removido com sucesso!"
-                    );
+                    dao.delete(id);
+                    JOptionPane.showMessageDialog(this, "Usuário removido com sucesso!");
                     pesquisarUsuarios();
-
-                } catch (RuntimeException e) {
+                } catch (DaoException e) {
                     JOptionPane.showMessageDialog(
-                        this,"Erro ao remover usuário: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE
-                    );
+                        this, "Erro ao remover usuário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
 
         // Editar usuário
         else if (coluna == 5) {
-            Usuario usuario = repositorio.buscarPorId(id);
+            Usuario usuario = dao.findById(id);
 
             if (usuario != null) {
                 TelaCadastroUsuario tela = new TelaCadastroUsuario(usuario);
