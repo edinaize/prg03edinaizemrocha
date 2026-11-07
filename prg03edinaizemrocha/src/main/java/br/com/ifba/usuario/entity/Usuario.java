@@ -9,6 +9,8 @@ import br.com.ifba.perfil.entity.Perfil;
 import br.com.ifba.usuario.interfaces.Autenticavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.util.Objects;
@@ -32,6 +34,8 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     private String dataNascimento;
     
     private String telefone;
+    
+    @Column(unique = true)
     private String email;
     
     // Login é a identidade do usuário
@@ -40,6 +44,11 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     
     @Column(nullable = false)
     private String senha;
+    
+    // Tipo de perfil: USUARIO ou ARTISTA
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_perfil", nullable = false, length = 20)
+    private TipoPerfil tipoPerfil = TipoPerfil.USUARIO;
     
     // Perfil associado ao usuário
     @Transient
@@ -133,6 +142,14 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public TipoPerfil getTipoPerfil() {
+        return tipoPerfil;
+    }
+
+    public void setTipoPerfil(TipoPerfil tipoPerfil) {
+        this.tipoPerfil = tipoPerfil;
     }
 
     // Retorna o perfil do usuário

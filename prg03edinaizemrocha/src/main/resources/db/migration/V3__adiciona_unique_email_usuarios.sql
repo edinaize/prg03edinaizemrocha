@@ -1,0 +1,10 @@
+/* 
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Other/SQLTemplate.sql to edit this template
+ */
+/**
+ * Author:  edina
+ * Created: 28 de out. de 2026
+ */
+ALTER TABLE usuarios
+    ADD CONSTRAINT uk_usuarios_email UNIQUE (email);

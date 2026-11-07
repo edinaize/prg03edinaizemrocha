@@ -28,10 +28,20 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.14</version>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>11.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+            <version>11.8.2</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>25</maven.compiler.release>
-        <exec.mainClass>com.mycompany.prg03edinaizemrocha.Prg03edinaizemrocha</exec.mainClass>
+        <exec.mainClass>br.com.ifba.main.Main</exec.mainClass>
     </properties>
 </project>

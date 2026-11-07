@@ -5,6 +5,7 @@
 package br.com.ifba.artista.entity;
 
 import br.com.ifba.obra.entity.Obra;
+import br.com.ifba.usuario.entity.TipoPerfil;
 import br.com.ifba.usuario.entity.Usuario;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,11 +27,12 @@ public class Artista extends Usuario {
  
     // Construtor
     public Artista() {
+        setTipoPerfil(TipoPerfil.ARTISTA);
     }
- 
     // Construtor com dados principais
     public Artista(String nome, String cpf, String login, String senha) {
         super(nome, cpf, login, senha);
+        setTipoPerfil(TipoPerfil.ARTISTA);
     }
  
     // Getters e setters dos atributos
