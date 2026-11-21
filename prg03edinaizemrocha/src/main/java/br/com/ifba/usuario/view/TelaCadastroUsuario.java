@@ -4,10 +4,13 @@
  */
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.artista.entity.Artista;
+import br.com.ifba.artista.view.TelaArtistaCadastro;
 import br.com.ifba.infrastructure.exception.DaoException;
 import br.com.ifba.login.view.TelaLogin;
 import br.com.ifba.usuario.dao.UsuarioDao;
 import br.com.ifba.usuario.dao.UsuarioIDao;
+import br.com.ifba.usuario.entity.TipoPerfil;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import br.com.ifba.usuario.entity.Usuario;
@@ -42,7 +45,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jButton1.setText("Salvar alterações");
 
         txtNome.setText(usuario.getNome());
-        txtCpf.setText(usuario.getCpf());
+        cmbTipoPerfil.setSelectedItem(usuario.getTipoPerfil() == TipoPerfil.ARTISTA ? "Artista" : "Espectador");
+        cmbTipoPerfil.setEnabled(false);
         cmbGenero.setSelectedItem(usuario.getGenero());
         txtDataNascimento.setText(usuario.getDataNascimento());
         txtTelefone.setText(usuario.getTelefone());
@@ -73,8 +77,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtCpf = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtNome = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -88,6 +90,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         txtSenha = new javax.swing.JPasswordField();
         txtConfirmarSenha = new javax.swing.JPasswordField();
         txtDataNascimento = new javax.swing.JFormattedTextField();
+        cmbTipoPerfil = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,7 +98,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jLabel1.setText("Nome Completo:");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("CPF:");
+        jLabel2.setText("Tipo de Perfil:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Gênero:");
@@ -126,8 +129,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jButton2.setText("Cancelar");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jScrollPane1.setViewportView(txtCpf);
-
         jScrollPane3.setViewportView(txtNome);
 
         jScrollPane5.setViewportView(txtTelefone);
@@ -144,6 +145,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         txtDataNascimento.addActionListener(this::txtDataNascimentoActionPerformed);
 
+        cmbTipoPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Artista", "Espectador" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,10 +162,9 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel10)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(228, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
@@ -170,7 +172,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtConfirmarSenha)
@@ -178,11 +181,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbGenero, 0, 180, Short.MAX_VALUE)
+                            .addComponent(cmbGenero, 0, 158, Short.MAX_VALUE)
                             .addComponent(txtSenha)
-                            .addComponent(txtDataNascimento))
-                        .addGap(62, 62, 62))))
+                            .addComponent(txtDataNascimento)
+                            .addComponent(cmbTipoPerfil, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(84, 84, 84))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,11 +196,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cmbTipoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,7 +244,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Captura os dados digitados
         String nome = txtNome.getText();
-        String cpf = txtCpf.getText();
+        String tipoPerfil = cmbTipoPerfil.getSelectedItem().toString();
         String genero = cmbGenero.getSelectedItem().toString();
         String dataNascimento = txtDataNascimento.getText();
         String telefone = txtTelefone.getText();
@@ -251,14 +254,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String confirmarSenha = new String(txtConfirmarSenha.getPassword());
 
         // Valida os dados preenchidos pelo usuário antes de realizar o cadastro
-        if (!ValidadorUsuario.camposPreenchidos(nome, cpf, dataNascimento, telefone, email, login, senha, confirmarSenha)
+        if (!ValidadorUsuario.camposPreenchidos(nome, dataNascimento, telefone, email, login, senha, confirmarSenha)
            || genero.equals("Selecione")) {
 
             JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
-
-        } else if (!ValidadorUsuario.cpfValido(cpf)) {
-
-            JOptionPane.showMessageDialog(this, "CPF inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else if (!ValidadorUsuario.senhasConferem(senha, confirmarSenha)) {
 
@@ -282,14 +281,17 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     usuario = usuarioEdicao;
 
                     usuario.setNome(nome);
-                    usuario.setCpf(cpf);
                     usuario.setLogin(login);
 
                     if (!senha.isEmpty()) {
                         usuario.setSenha(senha);
                     }
+                } else if (tipoPerfil.equals("Artista")) {
+                    // Perfil de artista: cria um Artista que também é um Usuario
+                    usuario = new Artista(nome, login, senha);
+
                 } else {
-                    usuario = new Usuario(nome, cpf, login, senha);
+                    usuario = new Usuario(nome, login, senha);
                 }
 
                 usuario.setGenero(genero);
@@ -299,6 +301,13 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
                 if (editando) {
                     dao.update(usuario);
+                } else if (usuario instanceof Artista) {
+                    
+                    // a tela do artista é quem salva no banco
+                    new TelaArtistaCadastro((Artista) usuario).setVisible(true);
+                    this.dispose();
+                    return;
+
                 } else {
                     dao.save(usuario);
                 }
@@ -379,6 +388,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbGenero;
+    private javax.swing.JComboBox<String> cmbTipoPerfil;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -391,13 +401,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPasswordField txtConfirmarSenha;
-    private javax.swing.JTextPane txtCpf;
     private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JTextPane txtEmail;
     private javax.swing.JTextPane txtLogin;

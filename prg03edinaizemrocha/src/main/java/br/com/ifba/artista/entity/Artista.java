@@ -7,6 +7,12 @@ package br.com.ifba.artista.entity;
 import br.com.ifba.obra.entity.Obra;
 import br.com.ifba.usuario.entity.TipoPerfil;
 import br.com.ifba.usuario.entity.Usuario;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,14 +21,20 @@ import java.util.List;
  *
  * @author edina
  */
+@Entity
+@Table(name = "artistas")
+@PrimaryKeyJoinColumn(name = "id")
 public class Artista extends Usuario {
     
     // Dados específicos do artista
+    @Column(length = 1000)
     private String biografia;
+    @Column(nullable = false)
     private String estilo;
     private String localizacao;
  
     // Lista de obras do artista
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.REMOVE)
     private final List<Obra> obras = new ArrayList<>();
  
     // Construtor
@@ -30,8 +42,8 @@ public class Artista extends Usuario {
         setTipoPerfil(TipoPerfil.ARTISTA);
     }
     // Construtor com dados principais
-    public Artista(String nome, String cpf, String login, String senha) {
-        super(nome, cpf, login, senha);
+    public Artista(String nome, String login, String senha) {
+        super(nome, login, senha);
         setTipoPerfil(TipoPerfil.ARTISTA);
     }
  

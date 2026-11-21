@@ -28,7 +28,7 @@ public class RepositorioUsuarioEmMemoriaTest {
         RepositorioUsuarioEmMemoria repositorio =
                 new RepositorioUsuarioEmMemoria();
 
-        Usuario usuario = new Usuario("Usuario Teste", "12345678901", "teste", "senha123");
+        Usuario usuario = new Usuario("Usuario Teste", "teste", "senha123");
 
          repositorio.cadastrar(usuario);
 

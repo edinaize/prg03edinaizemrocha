@@ -4,32 +4,59 @@
  */
 package br.com.ifba.obra.entity;
 
+import br.com.ifba.artista.entity.Artista;
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 /**
  *
  * @author edina
  */
-public class Obra {
+@Entity
+@Table(name = "obras")
+public class Obra extends PersistenceEntity{
     
-    private int idObra;
+    // Caminho da imagem da obra, as telas ainda não usam)
+    @Column(length = 500)
     private String imagem;
+    
+    @Column(nullable = false)
     private String titulo;
+    
+    @Column(length = 1000)
     private String descricao;
+    
+    @Column(length = 100)
+    private String tecnica;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private CategoriaObra categoria;
+
+    @Column(name = "data_publicacao")
     private LocalDate dataPublicacao;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private StatusObra status;
+    
+    // Somente artistas publicam obras
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "artista_id", nullable = false)
+    private Artista artista;
+    
+    public Obra() {
+    }
  
     public Obra(int idObra, String titulo) {
-        this.idObra = idObra;
         this.titulo = titulo;
         this.status = StatusObra.RASCUNHO;
-    }
-
-    public int getIdObra() {
-        return idObra;
-    }
-
-    public void setIdObra(int idObra) {
-        this.idObra = idObra;
     }
 
     public String getImagem() {
@@ -71,4 +98,28 @@ public class Obra {
     public void setStatus(StatusObra status) {
         this.status = status;
     }
+
+    public String getTecnica() {
+        return tecnica;
+    }
+
+    public void setTecnica(String tecnica) {
+        this.tecnica = tecnica;
+    }
+
+    public CategoriaObra getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaObra categoria) {
+        this.categoria = categoria;
+    }
+
+    public Artista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(Artista artista) {
+        this.artista = artista;
+    } 
 }

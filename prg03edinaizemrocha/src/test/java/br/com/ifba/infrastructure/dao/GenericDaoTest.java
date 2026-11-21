@@ -26,7 +26,7 @@ public class GenericDaoTest {
     @BeforeEach
     void preparar() {
         falso = new EntityManagerFalso();
-        usuario = new Usuario("Ana", "12345678901", "ana", "123456");
+        usuario = new Usuario("Ana", "ana", "123456");
 
         // DAO que usa o EntityManager falso em vez do banco
         dao = new GenericDao<>(Usuario.class) {
