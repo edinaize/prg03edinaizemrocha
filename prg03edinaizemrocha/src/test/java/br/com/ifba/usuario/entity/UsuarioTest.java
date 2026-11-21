@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UsuarioTest {
     @Test
     void autenticar_credenciaisCorretas_retornaTrue() {
-        Usuario usuario = new Usuario("Edinaize", "52998224725", "edinaize", "senha123");
+        Usuario usuario = new Usuario("Edinaize", "edinaize", "senha123");
  
         assertTrue(usuario.autenticar("edinaize", "senha123"));
     }
  
     @Test
     void autenticar_senhaIncorreta_retornaFalse() {
-        Usuario usuario = new Usuario("Edinaize", "52998224725", "edinaize", "senha123");
+        Usuario usuario = new Usuario("Edinaize", "edinaize", "senha123");
  
         assertFalse(usuario.autenticar("edinaize", "senhaErrada"));
     }
@@ -40,15 +40,15 @@ public class UsuarioTest {
     // Testa a descrição padrão do Usuario
     @Test
     void descreverPerfil_retornaDescricaoDoUsuario() {
-        Usuario usuario = new Usuario( "Carla", "12345678900", "carla", "senha123");
+        Usuario usuario = new Usuario( "Carla", "carla", "senha123");
 
         assertEquals("Usuario: Carla", usuario.descreverPerfil());
     }
     
     @Test
     void usuariosComMesmoLogin_saoConsideradosIguaisNaLista() {
-        Usuario usuario1 = new Usuario("Ana", "11111111111", "ana", "123456");
-        Usuario usuario2 = new Usuario("Bruno", "22222222222", "ana", "654321");
+        Usuario usuario1 = new Usuario("Ana", "ana", "123456");
+        Usuario usuario2 = new Usuario("Bruno", "ana", "654321");
 
         java.util.List<Usuario> usuarios = new java.util.ArrayList<>();
 

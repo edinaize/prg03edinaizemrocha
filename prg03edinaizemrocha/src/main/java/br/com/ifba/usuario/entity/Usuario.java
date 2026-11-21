@@ -26,9 +26,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     @Column(nullable = false)
     private String nome;
     
-    @Column(nullable = false, unique = true, length = 14)
-    private String cpf;
-    
     private String genero;
     @Column(name = "data_nascimento")
     private String dataNascimento;
@@ -59,9 +56,8 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     }
     
     // Construtor com os atributos principais
-    public Usuario(String nome, String cpf, String login, String senha) {
+    public Usuario(String nome, String login, String senha) {
         this.nome = nome;
-        this.cpf = cpf;
         this.login = login;
         this.senha = senha;
     }
@@ -69,7 +65,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     // Construtor com todos os campos
     public Usuario(String nome, String cpf, String genero, String dataNascimento, String telefone, String email, String login, String senha, Perfil perfil) {
         this.nome = nome;
-        this.cpf = cpf;
         this.genero = genero;
         this.dataNascimento = dataNascimento;
         this.telefone = telefone;
@@ -86,14 +81,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getGenero() {

@@ -4,31 +4,50 @@
  */
 package br.com.ifba.perfil.entity;
 
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import br.com.ifba.usuario.entity.Usuario;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
 /**
  *
  * @author edina
  */
-public class Perfil {
+@Entity
+@Table(name = "perfis")
+public class Perfil extends PersistenceEntity{
     
     // Atributos que representam os dados do perfil
-    private int id;
+    @Column(length = 500)
     private String foto;
+    
     private String descricao;
+    @Transient
     private int qtdSeguidores;
+    
+    @Transient
     private int qtdSeguindo;
+    
+    @Column(length = 1000)
     private String biografia;
+    
+    @Column(name = "area_atuacao")
+    private String areaAtuacao;
+    
+    // Cada usuário (ou artista) possui no máximo um perfil
+    @OneToOne(optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false, unique = true)
+    private Usuario usuario;
+
 
     public Perfil() {
     }
     
     // Getters e setters dos atributos
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFoto() {
         return foto;
@@ -69,6 +88,20 @@ public class Perfil {
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
-    
-    
+
+    public String getAreaAtuacao() {
+        return areaAtuacao;
+    }
+
+    public void setAreaAtuacao(String areaAtuacao) {
+        this.areaAtuacao = areaAtuacao;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }
