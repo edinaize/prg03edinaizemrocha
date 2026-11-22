@@ -49,5 +49,10 @@ public class UsuarioController implements UsuarioIController {
     @Override
     public List<Usuario> buscarPorNome(String nome) {
         return service.buscarPorNome(nome);
-    } 
+    }
+    
+    @Override
+    public void validar(Usuario usuario) {
+        service.validar(usuario);
+    }
 }

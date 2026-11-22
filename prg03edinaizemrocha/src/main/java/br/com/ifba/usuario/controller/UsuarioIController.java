@@ -19,4 +19,6 @@ public interface UsuarioIController {
     List<Usuario> findAll();
     Usuario findByLogin(String login);
     List<Usuario> buscarPorNome(String nome);
+    // UsuarioIService e UsuarioIController
+    void validar(Usuario usuario);
 }

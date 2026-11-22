@@ -8,8 +8,8 @@ import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.artista.view.TelaArtistaCadastro;
 import br.com.ifba.infrastructure.exception.DaoException;
 import br.com.ifba.login.view.TelaLogin;
-import br.com.ifba.usuario.dao.UsuarioDao;
-import br.com.ifba.usuario.dao.UsuarioIDao;
+import br.com.ifba.usuario.controller.UsuarioController;
+import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.TipoPerfil;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
@@ -24,8 +24,9 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
    
-    // DAO responsável pelo acesso aos dados do usuário
-    private final UsuarioIDao dao = new UsuarioDao();
+    // Controller responsável pelo acesso aos dados do usuário
+    private final UsuarioIController controller = new UsuarioController();
+
     private Usuario usuarioEdicao = null;
     
     /**
@@ -254,22 +255,13 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String confirmarSenha = new String(txtConfirmarSenha.getPassword());
 
         // Valida os dados preenchidos pelo usuário antes de realizar o cadastro
-        if (!ValidadorUsuario.camposPreenchidos(nome, dataNascimento, telefone, email, login, senha, confirmarSenha)
-           || genero.equals("Selecione")) {
+        if (genero.equals("Selecione")) {
 
             JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else if (!ValidadorUsuario.senhasConferem(senha, confirmarSenha)) {
 
             JOptionPane.showMessageDialog(this, "As senhas não coincidem.", "Erro", JOptionPane.ERROR_MESSAGE);
-
-        } else if (!ValidadorUsuario.senhaForte(senha)) {
-
-            JOptionPane.showMessageDialog(this, "Senha muito curta. Use pelo menos 6 caracteres.", "Erro", JOptionPane.ERROR_MESSAGE);
-
-        } else if (ValidadorUsuario.contemPalavraProibida(login)) {
-
-            JOptionPane.showMessageDialog(this, "Login contém palavra não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -300,16 +292,17 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 usuario.setEmail(email.trim().isEmpty() ? null : email.trim());
 
                 if (editando) {
-                    dao.update(usuario);
+                    controller.update(usuario);
                 } else if (usuario instanceof Artista) {
                     
-                    // a tela do artista é quem salva no banco
+                    // valida antes de seguir; a tela do artista é quem salva no banco
+                    controller.validar(usuario);
                     new TelaArtistaCadastro((Artista) usuario).setVisible(true);
                     this.dispose();
                     return;
 
                 } else {
-                    dao.save(usuario);
+                    controller.save(usuario);
                 }
 
                 JOptionPane.showMessageDialog(

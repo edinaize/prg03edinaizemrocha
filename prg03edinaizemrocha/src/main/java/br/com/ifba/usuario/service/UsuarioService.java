@@ -7,6 +7,8 @@ package br.com.ifba.usuario.service;
 import br.com.ifba.usuario.dao.UsuarioDao;
 import br.com.ifba.usuario.dao.UsuarioIDao;
 import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.exception.UsuarioInvalidoException;
+import br.com.ifba.usuario.validar.ValidadorUsuario;
 import java.util.List;
 
 /**
@@ -17,13 +19,31 @@ public class UsuarioService implements UsuarioIService {
    
     private final UsuarioIDao dao = new UsuarioDao();
 
+    // Regras de negócio do usuário
+    @Override
+    public void validar(Usuario usuario) {
+        if (!ValidadorUsuario.camposPreenchidos(
+                usuario.getNome(), usuario.getDataNascimento(), usuario.getTelefone(),
+                usuario.getEmail(), usuario.getLogin(), usuario.getSenha())) {
+            throw new UsuarioInvalidoException("Preencha todos os campos.");
+        }
+        if (!ValidadorUsuario.senhaForte(usuario.getSenha())) {
+            throw new UsuarioInvalidoException("Senha muito curta. Use pelo menos 6 caracteres.");
+        }
+        if (ValidadorUsuario.contemPalavraProibida(usuario.getLogin())) {
+            throw new UsuarioInvalidoException("Login contém palavra não permitida.");
+        }
+    }
+    
     @Override
     public void save(Usuario usuario) {
+        validar(usuario);
         dao.save(usuario);
     }
 
     @Override
     public Usuario update(Usuario usuario) {
+        validar(usuario);
         return dao.update(usuario);
     }
 
