@@ -4,12 +4,12 @@
  */
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.artista.controller.ArtistaIController;
 import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.artista.view.TelaArtistaCadastro;
 import br.com.ifba.infrastructure.exception.DaoException;
 import br.com.ifba.login.view.TelaLogin;
-import br.com.ifba.usuario.dao.UsuarioDao;
-import br.com.ifba.usuario.dao.UsuarioIDao;
+import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.TipoPerfil;
 import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
@@ -22,22 +22,24 @@ import br.com.ifba.usuario.exception.UsuarioInvalidoException;
  */
 public class TelaCadastroUsuario extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
-   
-    // DAO responsável pelo acesso aos dados do usuário
-    private final UsuarioIDao dao = new UsuarioDao();
+    private final UsuarioIController controller;
+    private final ArtistaIController artistaController;
     private Usuario usuarioEdicao = null;
     
     /**
      * Creates new form TelaCadastroUsuario
      * 
+     * @param controller
+     * @param artistaController
      */
-    public TelaCadastroUsuario() {
+    public TelaCadastroUsuario(UsuarioIController controller, ArtistaIController artistaController) {
+        this.controller = controller;
+        this.artistaController = artistaController;
         initComponents();
     }
     
-    public TelaCadastroUsuario(Usuario usuario) {
-        initComponents();
+    public TelaCadastroUsuario(UsuarioIController controller, ArtistaIController artistaController, Usuario usuario) {
+        this(controller, artistaController);
         
         usuarioEdicao = usuario;
 
@@ -254,22 +256,13 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String confirmarSenha = new String(txtConfirmarSenha.getPassword());
 
         // Valida os dados preenchidos pelo usuário antes de realizar o cadastro
-        if (!ValidadorUsuario.camposPreenchidos(nome, dataNascimento, telefone, email, login, senha, confirmarSenha)
-           || genero.equals("Selecione")) {
+        if (genero.equals("Selecione")) {
 
             JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else if (!ValidadorUsuario.senhasConferem(senha, confirmarSenha)) {
 
             JOptionPane.showMessageDialog(this, "As senhas não coincidem.", "Erro", JOptionPane.ERROR_MESSAGE);
-
-        } else if (!ValidadorUsuario.senhaForte(senha)) {
-
-            JOptionPane.showMessageDialog(this, "Senha muito curta. Use pelo menos 6 caracteres.", "Erro", JOptionPane.ERROR_MESSAGE);
-
-        } else if (ValidadorUsuario.contemPalavraProibida(login)) {
-
-            JOptionPane.showMessageDialog(this, "Login contém palavra não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -300,16 +293,17 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 usuario.setEmail(email.trim().isEmpty() ? null : email.trim());
 
                 if (editando) {
-                    dao.update(usuario);
+                    controller.update(usuario);
                 } else if (usuario instanceof Artista) {
                     
-                    // a tela do artista é quem salva no banco
-                    new TelaArtistaCadastro((Artista) usuario).setVisible(true);
+                    // valida antes de seguir; a tela do artista é quem salva no banco
+                    controller.validar(usuario);
+                    new TelaArtistaCadastro(controller, artistaController, (Artista) usuario).setVisible(true);
                     this.dispose();
                     return;
 
                 } else {
-                    dao.save(usuario);
+                    controller.save(usuario);
                 }
 
                 JOptionPane.showMessageDialog(
@@ -320,7 +314,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
                 );
 
-                new TelaUsuarioListar().setVisible(true);
+                new TelaUsuarioListar(controller, artistaController).setVisible(true);
                 this.dispose();
 
             } catch (UsuarioInvalidoException e) {
@@ -348,7 +342,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Abre a tela de login
-        TelaLogin telaLogin = new TelaLogin();
+        TelaLogin telaLogin = new TelaLogin(controller, artistaController);
         telaLogin.setVisible(true);
         
         // Fecha a tela de cadastro
@@ -360,31 +354,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataNascimentoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-  
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaCadastroUsuario().setVisible(true));
-    }
+    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbGenero;

@@ -1,8 +1,8 @@
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.artista.controller.ArtistaIController;
 import br.com.ifba.infrastructure.exception.DaoException;
-import br.com.ifba.usuario.dao.UsuarioDao;
-import br.com.ifba.usuario.dao.UsuarioIDao;
+import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 import java.awt.Component;
 import java.util.List;
@@ -16,10 +16,13 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class TelaUsuarioListar extends javax.swing.JFrame {
-    // DAO responsável pelo acesso aos dados do usuário
-    private final UsuarioIDao dao = new UsuarioDao();
+    // Controller responsável pelo acesso aos dados do usuário
+    private final  UsuarioIController controller;
+    private final ArtistaIController artistaController;
     
-    public TelaUsuarioListar() {
+    public TelaUsuarioListar(UsuarioIController controller, ArtistaIController artistaController) {
+        this.controller = controller;
+        this.artistaController = artistaController;
         initComponents();
         configurarTabela();
         carregarUsuarios();
@@ -73,7 +76,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     // Busca os usuários cadastrados no banco.
     private void carregarUsuarios() {
         try {
-            preencherTabela(dao.findAll());
+            preencherTabela(controller.findAll());
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                     this, "Erro ao carregar usuários: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -109,7 +112,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
         }
 
         try {
-            preencherTabela(dao.buscarPorNome(busca));
+            preencherTabela(controller.buscarPorNome(busca));
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                 this, "Erro ao buscar usuários: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -262,7 +265,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     }//GEN-LAST:event_jBuscarActionPerformed
 
     private void jBtcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtcadastrarActionPerformed
-        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario();
+        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario(controller, artistaController);
         telaCadastro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtcadastrarActionPerformed
@@ -284,7 +287,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
-                    dao.delete(id);
+                    controller.delete(id);
                     JOptionPane.showMessageDialog(this, "Usuário removido com sucesso!");
                     pesquisarUsuarios();
                 } catch (DaoException e) {
@@ -296,40 +299,16 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
 
         // Editar usuário
         else if (coluna == 5) {
-            Usuario usuario = dao.findById(id);
+            Usuario usuario = controller.findById(id);
 
             if (usuario != null) {
-                TelaCadastroUsuario tela = new TelaCadastroUsuario(usuario);
+                TelaCadastroUsuario tela = new TelaCadastroUsuario(controller, artistaController, usuario);
                 tela.setVisible(true);
                 this.dispose();
             }
         } // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaUsuarioListar().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TextBuscar;

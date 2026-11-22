@@ -3,11 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.artista.view;
-import br.com.ifba.artista.dao.ArtistaDao;
+
+import br.com.ifba.artista.controller.ArtistaIController;
 import br.com.ifba.artista.entity.Artista;
-import br.com.ifba.artista.dao.ArtistaIDao;
-import br.com.ifba.artista.validar.ValidadorArtista;
 import br.com.ifba.infrastructure.exception.DaoException;
+import br.com.ifba.usuario.controller.UsuarioIController;
+import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import br.com.ifba.usuario.view.TelaUsuarioListar;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -17,8 +18,9 @@ import javax.swing.JOptionPane;
  * @author edina
  */
 public class TelaArtistaCadastro extends JFrame {
-    // DAO responsável pelo acesso aos dados do artista
-    private final ArtistaIDao dao = new ArtistaDao();
+    // Controller responsável pelo acesso aos dados do artista
+    private final UsuarioIController usuarioController;
+    private final ArtistaIController controller;
 
     // Artista que está sendo cadastrado (novo, vindo da tela de cadastro de usuário)
     // ou editado (vindo da listagem de artistas)
@@ -26,7 +28,9 @@ public class TelaArtistaCadastro extends JFrame {
     private final boolean novo;
     
 
-    public TelaArtistaCadastro(Artista artista) {
+    public TelaArtistaCadastro(UsuarioIController usuarioController, ArtistaIController controller, Artista artista) {
+        this.usuarioController = usuarioController;
+        this.controller = controller;
         initComponents();
         
         this.artista = artista;
@@ -41,10 +45,6 @@ public class TelaArtistaCadastro extends JFrame {
             jTextFieldLocal.setText(artista.getLocalizacao());
         }
 
-    }
-
-    TelaArtistaCadastro() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 
@@ -128,83 +128,53 @@ public class TelaArtistaCadastro extends JFrame {
         String estilo = jTextFieldEstilo.getText().trim();
         String localizacao = jTextFieldLocal.getText().trim();
 
-        // Valida os dados preenchidos antes de salvar
-        if (!ValidadorArtista.estiloValido(estilo)) {
+        try {
+            artista.setEstilo(estilo);
+            artista.setLocalizacao(localizacao.isEmpty() ? null : localizacao);
 
-            JOptionPane.showMessageDialog(this, "Informe o estilo do artista.", "Erro", JOptionPane.ERROR_MESSAGE);
-
-        } else {
-
-            try {
-                artista.setEstilo(estilo);
-                artista.setLocalizacao(localizacao.isEmpty() ? null : localizacao);
-
-                // Artista novo ainda não existe no banco
-                if (novo) {
-                    dao.save(artista);
-                } else {
-                    dao.update(artista);
-                }
-
-                JOptionPane.showMessageDialog(
-                    this,
-                    novo ? "Artista cadastrado com sucesso!"
-                         : "Artista atualizado com sucesso!",
-                    "Sucesso",
-                    JOptionPane.INFORMATION_MESSAGE
-                );
-
-                if (novo) {
-                    new TelaUsuarioListar().setVisible(true);
-                } else {
-                    new TelaArtistaListar().setVisible(true);
-                }
-                this.dispose();
-
-            } catch (DaoException e) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Não foi possível salvar. Verifique os dados (login e e-mail não podem se repetir) e a conexão com o banco.",
-                    "Erro ao salvar",
-                    JOptionPane.ERROR_MESSAGE
-                );
-            } catch (RuntimeException e) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Ocorreu um erro ao salvar o artista: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-                );
+            // Artista novo ainda não existe no banco
+            if (novo) {
+                controller.save(artista);
+            } else {
+                controller.update(artista);
             }
+
+            JOptionPane.showMessageDialog(
+                this,
+                novo ? "Artista cadastrado com sucesso!"
+                : "Artista atualizado com sucesso!",
+                "Sucesso",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+
+            if (novo) {
+                new TelaUsuarioListar(usuarioController, controller).setVisible(true);
+            } else {
+                new TelaArtistaListar(usuarioController, controller).setVisible(true);
+            }
+            this.dispose();
+                
+        } catch (UsuarioInvalidoException e) {
+           JOptionPane.showMessageDialog(
+                this, e.getMessage(), "Dados inválidos", JOptionPane.ERROR_MESSAGE);
+
+        } catch (DaoException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Não foi possível salvar. Verifique os dados (login e e-mail não podem se repetir) e a conexão com o banco.",
+                "Erro ao salvar",
+                JOptionPane.ERROR_MESSAGE
+            );
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Ocorreu um erro ao salvar o artista: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        
-
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaArtistaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaArtistaCadastro().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

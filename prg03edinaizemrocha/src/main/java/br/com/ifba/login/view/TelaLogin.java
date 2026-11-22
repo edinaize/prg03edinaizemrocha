@@ -4,6 +4,8 @@
  */
 package br.com.ifba.login.view;
 
+import br.com.ifba.artista.controller.ArtistaIController;
+import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.view.TelaCadastroUsuario;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.interfaces.Autenticavel;
@@ -14,12 +16,17 @@ import javax.swing.JOptionPane;
  */
 public class TelaLogin extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLogin.class.getName());
+    private final UsuarioIController usuarioController;
+    private final ArtistaIController artistaController;
 
     /**
      * Creates new form tela
+     * @param usuarioController
+     * @param artistaController
      */
-    public TelaLogin() {
+    public TelaLogin(UsuarioIController usuarioController, ArtistaIController artistaController) {
+        this.usuarioController = usuarioController;
+        this.artistaController = artistaController;
         initComponents();
         linkCadastro.setText("<html><u>Cadastre-se</u></html>");
     }
@@ -190,37 +197,13 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void linkCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkCadastroMouseClicked
         // Abre a tela de cadastro
-        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario();
+        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario(usuarioController, artistaController);
         telaCadastro.setVisible(true);
         
         // Fecha a tela de Login
         this.dispose();
     }//GEN-LAST:event_linkCadastroMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaLogin().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;

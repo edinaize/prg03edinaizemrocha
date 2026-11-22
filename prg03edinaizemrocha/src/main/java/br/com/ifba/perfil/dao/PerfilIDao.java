@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author edina
  */
-interface PerfilIDao extends GenericIDao<Perfil> {
+public interface PerfilIDao extends GenericIDao<Perfil> {
     // Busca o perfil de um usuário (nulo se não existir)
     Perfil findByUsuarioId(long usuarioId);
 
