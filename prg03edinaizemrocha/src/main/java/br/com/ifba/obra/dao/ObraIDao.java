@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author edina
  */
-interface ObraIDao extends GenericIDao<Obra> {
+public interface ObraIDao extends GenericIDao<Obra> {
     // Busca por parte do título ou do nome do artista e por categoria.
     List<Obra> pesquisar(String termo, CategoriaObra categoria);   
 }
