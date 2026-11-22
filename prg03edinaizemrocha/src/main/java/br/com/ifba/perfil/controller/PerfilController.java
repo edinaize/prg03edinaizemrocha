@@ -6,7 +6,6 @@ package br.com.ifba.perfil.controller;
 
 import br.com.ifba.perfil.entity.Perfil;
 import br.com.ifba.perfil.service.PerfilIService;
-import br.com.ifba.perfil.service.PerfilService;
 import java.util.List;
 
 /**
@@ -14,8 +13,11 @@ import java.util.List;
  * @author edina
  */
 public class PerfilController implements PerfilIController {
-    private final PerfilIService service = new PerfilService();
-
+    private final PerfilIService service;
+    
+    public PerfilController(PerfilIService service) {
+        this.service = service;
+    }
     @Override
     public void save(Perfil perfil) {
         service.save(perfil);

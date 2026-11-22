@@ -7,7 +7,6 @@ package br.com.ifba.obra.controller;
 import br.com.ifba.obra.entity.CategoriaObra;
 import br.com.ifba.obra.entity.Obra;
 import br.com.ifba.obra.service.ObraIService;
-import br.com.ifba.obra.service.ObraService;
 import java.util.List;
 
 /**
@@ -15,8 +14,12 @@ import java.util.List;
  * @author edina
  */
 public class ObraController implements ObraIController {
-    private final ObraIService service = new ObraService();
-
+    private final ObraIService service;
+    
+    public ObraController(ObraIService service) {
+        this.service = service;
+    }
+    
     @Override
     public void save(Obra obra) {
         service.save(obra);

@@ -4,14 +4,12 @@
  */
 package br.com.ifba.artista.service;
 
-import br.com.ifba.artista.dao.ArtistaDao;
 import br.com.ifba.artista.dao.ArtistaIDao;
 import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.artista.validar.ValidadorArtista;
 import br.com.ifba.obra.entity.CategoriaObra;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import br.com.ifba.usuario.service.UsuarioIService;
-import br.com.ifba.usuario.service.UsuarioService;
 import java.util.List;
 
 /**
@@ -19,8 +17,13 @@ import java.util.List;
  * @author edina
  */
 public class ArtistaService implements ArtistaIService {
-    private final ArtistaIDao dao = new ArtistaDao();
-    private final UsuarioIService usuarioService = new UsuarioService();
+    private final ArtistaIDao dao;
+    private final UsuarioIService usuarioService;
+    
+    public ArtistaService(ArtistaIDao dao, UsuarioIService usuarioService) {
+        this.dao = dao;
+        this.usuarioService = usuarioService;
+    }
 
     // Regras de negócio do artista (inclui as do usuário)
     private void validar(Artista artista) {

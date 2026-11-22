@@ -4,11 +4,11 @@
  */
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.artista.controller.ArtistaIController;
 import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.artista.view.TelaArtistaCadastro;
 import br.com.ifba.infrastructure.exception.DaoException;
 import br.com.ifba.login.view.TelaLogin;
-import br.com.ifba.usuario.controller.UsuarioController;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.TipoPerfil;
 import javax.swing.JOptionPane;
@@ -22,23 +22,24 @@ import br.com.ifba.usuario.exception.UsuarioInvalidoException;
  */
 public class TelaCadastroUsuario extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
-   
-    // Controller responsável pelo acesso aos dados do usuário
-    private final UsuarioIController controller = new UsuarioController();
-
+    private final UsuarioIController controller;
+    private final ArtistaIController artistaController;
     private Usuario usuarioEdicao = null;
     
     /**
      * Creates new form TelaCadastroUsuario
      * 
+     * @param controller
+     * @param artistaController
      */
-    public TelaCadastroUsuario() {
+    public TelaCadastroUsuario(UsuarioIController controller, ArtistaIController artistaController) {
+        this.controller = controller;
+        this.artistaController = artistaController;
         initComponents();
     }
     
-    public TelaCadastroUsuario(Usuario usuario) {
-        initComponents();
+    public TelaCadastroUsuario(UsuarioIController controller, ArtistaIController artistaController, Usuario usuario) {
+        this(controller, artistaController);
         
         usuarioEdicao = usuario;
 
@@ -297,7 +298,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     
                     // valida antes de seguir; a tela do artista é quem salva no banco
                     controller.validar(usuario);
-                    new TelaArtistaCadastro((Artista) usuario).setVisible(true);
+                    new TelaArtistaCadastro(controller, artistaController, (Artista) usuario).setVisible(true);
                     this.dispose();
                     return;
 
@@ -313,7 +314,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
                 );
 
-                new TelaUsuarioListar().setVisible(true);
+                new TelaUsuarioListar(controller, artistaController).setVisible(true);
                 this.dispose();
 
             } catch (UsuarioInvalidoException e) {
@@ -341,7 +342,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Abre a tela de login
-        TelaLogin telaLogin = new TelaLogin();
+        TelaLogin telaLogin = new TelaLogin(controller, artistaController);
         telaLogin.setVisible(true);
         
         // Fecha a tela de cadastro
@@ -353,31 +354,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataNascimentoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-  
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaCadastroUsuario().setVisible(true));
-    }
+    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbGenero;

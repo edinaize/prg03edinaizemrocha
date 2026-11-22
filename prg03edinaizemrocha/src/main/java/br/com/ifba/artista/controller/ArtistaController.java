@@ -6,7 +6,6 @@ package br.com.ifba.artista.controller;
 
 import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.artista.service.ArtistaIService;
-import br.com.ifba.artista.service.ArtistaService;
 import br.com.ifba.obra.entity.CategoriaObra;
 import java.util.List;
 
@@ -15,8 +14,11 @@ import java.util.List;
  * @author edina
  */
 public class ArtistaController implements ArtistaIController {
-    private final ArtistaIService service = new ArtistaService();
-
+    private final ArtistaIService service;
+    
+    public ArtistaController(ArtistaIService service) {
+        this.service = service;
+    }
     @Override
     public void save(Artista artista) {
         service.save(artista);

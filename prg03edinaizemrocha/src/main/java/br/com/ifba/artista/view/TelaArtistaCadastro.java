@@ -4,10 +4,10 @@
  */
 package br.com.ifba.artista.view;
 
-import br.com.ifba.artista.controller.ArtistaController;
 import br.com.ifba.artista.controller.ArtistaIController;
 import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.infrastructure.exception.DaoException;
+import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import br.com.ifba.usuario.view.TelaUsuarioListar;
 import javax.swing.JFrame;
@@ -19,7 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class TelaArtistaCadastro extends JFrame {
     // Controller responsável pelo acesso aos dados do artista
-    private final ArtistaIController controller = new ArtistaController();
+    private final UsuarioIController usuarioController;
+    private final ArtistaIController controller;
 
     // Artista que está sendo cadastrado (novo, vindo da tela de cadastro de usuário)
     // ou editado (vindo da listagem de artistas)
@@ -27,7 +28,9 @@ public class TelaArtistaCadastro extends JFrame {
     private final boolean novo;
     
 
-    public TelaArtistaCadastro(Artista artista) {
+    public TelaArtistaCadastro(UsuarioIController usuarioController, ArtistaIController controller, Artista artista) {
+        this.usuarioController = usuarioController;
+        this.controller = controller;
         initComponents();
         
         this.artista = artista;
@@ -42,10 +45,6 @@ public class TelaArtistaCadastro extends JFrame {
             jTextFieldLocal.setText(artista.getLocalizacao());
         }
 
-    }
-
-    TelaArtistaCadastro() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 
@@ -149,9 +148,9 @@ public class TelaArtistaCadastro extends JFrame {
             );
 
             if (novo) {
-                new TelaUsuarioListar().setVisible(true);
+                new TelaUsuarioListar(usuarioController, controller).setVisible(true);
             } else {
-                new TelaArtistaListar().setVisible(true);
+                new TelaArtistaListar(usuarioController, controller).setVisible(true);
             }
             this.dispose();
                 
@@ -176,32 +175,6 @@ public class TelaArtistaCadastro extends JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        
-
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaArtistaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaArtistaCadastro().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -4,7 +4,6 @@
  */
 package br.com.ifba.usuario.service;
 
-import br.com.ifba.usuario.dao.UsuarioDao;
 import br.com.ifba.usuario.dao.UsuarioIDao;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
@@ -17,8 +16,11 @@ import java.util.List;
  */
 public class UsuarioService implements UsuarioIService {
    
-    private final UsuarioIDao dao = new UsuarioDao();
+    private final UsuarioIDao dao;
 
+    public UsuarioService(UsuarioIDao dao) {
+        this.dao = dao;
+    }
     // Regras de negócio do usuário
     @Override
     public void validar(Usuario usuario) {

@@ -15,7 +15,11 @@ import java.util.List;
  * @author edina
  */
 public class ObraService implements ObraIService {
-    private final ObraIDao dao = new ObraDao();
+    private final ObraIDao dao;
+    
+    public ObraService(ObraIDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public void save(Obra obra) {

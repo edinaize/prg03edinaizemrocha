@@ -4,7 +4,6 @@
  */
 package br.com.ifba.perfil.service;
 
-import br.com.ifba.perfil.dao.PerfilDao;
 import br.com.ifba.perfil.dao.PerfilIDao;
 import br.com.ifba.perfil.entity.Perfil;
 import java.util.List;
@@ -14,7 +13,11 @@ import java.util.List;
  * @author edina
  */
 public class PerfilService implements PerfilIService {
-    private final PerfilIDao dao = new PerfilDao();
+    private final PerfilIDao dao;
+    
+    public PerfilService(PerfilIDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public void save(Perfil perfil) {

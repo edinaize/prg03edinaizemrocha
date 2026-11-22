@@ -6,7 +6,6 @@ package br.com.ifba.usuario.controller;
 
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioIService;
-import br.com.ifba.usuario.service.UsuarioService;
 import java.util.List;
 
 /**
@@ -14,7 +13,11 @@ import java.util.List;
  * @author edina
  */
 public class UsuarioController implements UsuarioIController {
-    private final UsuarioIService service = new UsuarioService();
+    private final UsuarioIService service;
+    
+    public UsuarioController(UsuarioIService service) {
+        this.service = service;
+    }
 
 @Override
     public void save(Usuario usuario) {

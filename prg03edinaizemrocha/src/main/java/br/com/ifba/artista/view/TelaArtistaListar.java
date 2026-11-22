@@ -1,9 +1,10 @@
 package br.com.ifba.artista.view;
 
-import br.com.ifba.artista.dao.ArtistaDao;
-import br.com.ifba.artista.dao.ArtistaIDao;
+import br.com.ifba.artista.controller.ArtistaIController;
 import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.infrastructure.exception.DaoException;
+import br.com.ifba.usuario.controller.UsuarioIController;
+import br.com.ifba.usuario.view.TelaCadastroUsuario;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -16,10 +17,13 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class TelaArtistaListar extends javax.swing.JFrame {
-    // DAO responsável pelo acesso aos dados do usuário    
-    private final ArtistaIDao dao = new ArtistaDao();
+    // Controller responsável pelo acesso aos dados do usuário 
+    private final UsuarioIController usuarioController;
+    private final ArtistaIController controller;
     
-    public TelaArtistaListar() {
+    public TelaArtistaListar(UsuarioIController usuarioController, ArtistaIController controller) {
+        this.usuarioController = usuarioController;
+        this.controller = controller;
         initComponents();
         configurarTabela();
         carregarArtistas();
@@ -72,7 +76,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
     
      private void carregarArtistas() {
         try {
-            preencherTabela(dao.findAll());
+            preencherTabela(controller.findAll());
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                     this, "Erro ao carregar artistas: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -109,7 +113,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
 
         try {
             // categoria nula = todas as categorias
-            preencherTabela(dao.pesquisar(busca, null));
+            preencherTabela(controller.pesquisar(busca, null));
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                 this, "Erro ao buscar artistas: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -262,7 +266,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
     }//GEN-LAST:event_jBuscarActionPerformed
 
     private void jBtcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtcadastrarActionPerformed
-        TelaArtistaCadastro telaCadastro = new TelaArtistaCadastro();
+        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario(usuarioController, controller);
         telaCadastro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtcadastrarActionPerformed
@@ -284,7 +288,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
-                    dao.delete(id);
+                    controller.delete(id);
                     JOptionPane.showMessageDialog(this, "Artista removido com sucesso!");
                     pesquisarArtistas();
                 } catch (DaoException e) {
@@ -296,40 +300,16 @@ public class TelaArtistaListar extends javax.swing.JFrame {
 
         // Editar artista
         else if (coluna == 5) {
-            Artista artista = dao.findById(id);
+            Artista artista = controller.findById(id);
 
             if (artista != null) {
-                TelaArtistaCadastro tela = new TelaArtistaCadastro(artista);
+                TelaArtistaCadastro tela = new TelaArtistaCadastro(usuarioController, controller, artista);
                 tela.setVisible(true);
                 this.dispose();
             }
         } // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaArtistaListar().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TextBuscar;
