@@ -50,7 +50,7 @@ public class FakeArtistaDao implements ArtistaIDao {
 
     // A categoria depende das obras do artista, então o fake filtra só pelo nome
     @Override
-    public List<Artista> pesquisar(String nome, CategoriaObra categoria) {
+    public List<Artista> search(String nome, CategoriaObra categoria) {
         String termo = nome == null ? "" : nome.trim().toLowerCase();
         return artistas.stream()
                 .filter(a -> a.getNome().toLowerCase().contains(termo))

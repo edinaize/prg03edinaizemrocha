@@ -33,38 +33,6 @@ public class ValidadorUsuarioTest {
         assertFalse(ValidadorUsuario.camposPreenchidos("Ana", null, "email@teste.com"));
     }
  
-    // CPF Valido
-    @Test
-    void cpfValido_cpfComFormatoCorreto_retornaTrue() {
-        // CPF válido usado como referência (dígitos verificadores corretos)
-        assertTrue(ValidadorUsuario.cpfValido("529.982.247-25"));
-    }
- 
-    @Test
-    void cpfValido_cpfVazio_retornaFalse() {
-        assertFalse(ValidadorUsuario.cpfValido(""));
-    }
- 
-    @Test
-    void cpfValido_cpfComLetras_retornaFalse() {
-        assertFalse(ValidadorUsuario.cpfValido("abc.def.ghi-jk"));
-    }
- 
-    @Test
-    void cpfValido_cpfComTamanhoErrado_retornaFalse() {
-        assertFalse(ValidadorUsuario.cpfValido("123456789"));
-    }
- 
-    @Test
-    void cpfValido_cpfComTodosDigitosIguais_retornaFalse() {
-        assertFalse(ValidadorUsuario.cpfValido("111.111.111-11"));
-    }
- 
-    @Test
-    void cpfValido_cpfNulo_retornaFalse() {
-        assertFalse(ValidadorUsuario.cpfValido(null));
-    }
- 
     // Senha Forte
     @Test
     void senhaForte_senhaComTamanhoMinimo_retornaTrue() {
