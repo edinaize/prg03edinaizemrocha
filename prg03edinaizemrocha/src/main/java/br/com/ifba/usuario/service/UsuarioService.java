@@ -31,7 +31,7 @@ public class UsuarioService implements UsuarioIService {
                 usuario.getEmail(), usuario.getLogin(), usuario.getSenha())) {
             throw new UsuarioInvalidoException("Preencha todos os campos.");
         }
-        if (!ValidadorUsuario.senhaForte(usuario.getSenha())) {
+        if (!ValidadorUsuario.senhaTemTamanhoMinimo(usuario.getSenha())) {
             throw new UsuarioInvalidoException("Senha muito curta. Use pelo menos 6 caracteres.");
         }
         if (ValidadorUsuario.contemPalavraProibida(usuario.getLogin())) {

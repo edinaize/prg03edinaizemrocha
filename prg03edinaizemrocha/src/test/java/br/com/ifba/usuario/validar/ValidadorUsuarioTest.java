@@ -68,22 +68,22 @@ public class ValidadorUsuarioTest {
     // Senha Forte
     @Test
     void senhaForte_senhaComTamanhoMinimo_retornaTrue() {
-        assertTrue(ValidadorUsuario.senhaForte("123456"));
+        assertTrue(ValidadorUsuario.senhaTemTamanhoMinimo("123456"));
     }
  
     @Test
     void senhaForte_senhaMenorQueOMinimo_retornaFalse() {
-        assertFalse(ValidadorUsuario.senhaForte("123"));
+        assertFalse(ValidadorUsuario.senhaTemTamanhoMinimo("123"));
     }
  
     @Test
     void senhaForte_senhaVazia_retornaFalse() {
-        assertFalse(ValidadorUsuario.senhaForte(""));
+        assertFalse(ValidadorUsuario.senhaTemTamanhoMinimo(""));
     }
  
     @Test
     void senhaForte_senhaNula_retornaFalse() {
-        assertFalse(ValidadorUsuario.senhaForte(null));
+        assertFalse(ValidadorUsuario.senhaTemTamanhoMinimo(null));
     }
  
     // Senhas Conferem

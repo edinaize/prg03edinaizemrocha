@@ -51,7 +51,7 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
     @Transient
     private Perfil perfil;
 
-    // Construtor vazio
+    
     public Usuario() {
     }
     
@@ -74,7 +74,7 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         this.perfil = perfil;
     }
 
-    // Getters e setters dos atributos
+    
     public String getNome() {
         return nome;
     }
@@ -139,12 +139,10 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         this.tipoPerfil = tipoPerfil;
     }
 
-    // Retorna o perfil do usuário
     public Perfil getPerfil() {
         return perfil;
     }
 
-    // Define o perfil do usuário
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
@@ -156,7 +154,6 @@ public class Usuario extends PersistenceEntity implements Autenticavel {
         return this.login.equals(login) && this.senha.equals(senha);
     }
     
-    // Descreve o perfil do usuário
     public String descreverPerfil() {
         return "Usuario: " + nome;
     }
