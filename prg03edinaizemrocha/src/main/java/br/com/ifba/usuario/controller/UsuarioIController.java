@@ -19,7 +19,7 @@ public interface UsuarioIController {
     Usuario findById(Long id);
     List<Usuario> findAll();
     Usuario findByLogin(String login);
-    List<Usuario> buscarPorNome(String nome);
+    List<Usuario> findByNome(String nome);
     // UsuarioIService e UsuarioIController
     void validar(Usuario usuario);
     Usuario criarUsuario(TipoPerfil tipo, String nome, String login, String senha);

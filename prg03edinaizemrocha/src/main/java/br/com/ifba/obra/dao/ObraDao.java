@@ -23,7 +23,7 @@ public class ObraDao extends GenericDao<Obra> implements ObraIDao {
 
     @Override
     public List<Obra> pesquisar(String termo, CategoriaObra categoria) {
-        EntityManager em = criarEntityManager();
+        EntityManager em = createEntityManager();
         String busca = termo == null ? "" : termo.trim();
 
         try {

@@ -23,8 +23,8 @@ public class ArtistaDao extends GenericDao<Artista> implements ArtistaIDao{
     }
 
     @Override
-    public List<Artista> pesquisar(String nome, CategoriaObra categoria) {
-        EntityManager em = criarEntityManager();
+    public List<Artista> search(String nome, CategoriaObra categoria) {
+        EntityManager em = createEntityManager();
         String termo = nome == null ? "" : nome.trim();
 
         try {

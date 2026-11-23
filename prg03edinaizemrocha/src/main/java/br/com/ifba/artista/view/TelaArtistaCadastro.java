@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 public class TelaArtistaCadastro extends JFrame {
     // Controller responsável pelo acesso aos dados do artista
     private final UsuarioIController usuarioController;
-    private final ArtistaIController controller;
+    private final ArtistaIController artistaController;
 
     // Artista que está sendo cadastrado (novo, vindo da tela de cadastro de usuário)
     // ou editado (vindo da listagem de artistas)
@@ -30,7 +30,7 @@ public class TelaArtistaCadastro extends JFrame {
 
     public TelaArtistaCadastro(UsuarioIController usuarioController, ArtistaIController controller, Artista artista) {
         this.usuarioController = usuarioController;
-        this.controller = controller;
+        this.artistaController = controller;
         initComponents();
         
         this.artista = artista;
@@ -39,10 +39,10 @@ public class TelaArtistaCadastro extends JFrame {
 
         if (!novo) {
             jLabel1.setText("Editar Artista");
-            jButton1.setText("Salvar alterações");
+            btnCadastrar.setText("Salvar alterações");
 
-            jTextFieldEstilo.setText(artista.getEstilo());
-            jTextFieldLocal.setText(artista.getLocalizacao());
+            txtEstilo.setText(artista.getEstilo());
+            txtLocalizacao.setText(artista.getLocalizacao());
         }
 
     }
@@ -60,9 +60,9 @@ public class TelaArtistaCadastro extends JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldEstilo = new javax.swing.JTextField();
-        jTextFieldLocal = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtEstilo = new javax.swing.JTextField();
+        txtLocalizacao = new javax.swing.JTextField();
+        btnCadastrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,12 +72,12 @@ public class TelaArtistaCadastro extends JFrame {
 
         jLabel3.setText("Localizaçâo");
 
-        jTextFieldEstilo.setText("jTextField1");
+        txtEstilo.setText("jTextField1");
 
-        jTextFieldLocal.setText("jTextField2");
+        txtLocalizacao.setText("jTextField2");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnCadastrar.setText("jButton1");
+        btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,11 +95,11 @@ public class TelaArtistaCadastro extends JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
-                        .addComponent(jButton1)))
+                        .addComponent(btnCadastrar)))
                 .addContainerGap(190, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -110,23 +110,23 @@ public class TelaArtistaCadastro extends JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
-                .addComponent(jButton1)
+                .addComponent(btnCadastrar)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        String estilo = jTextFieldEstilo.getText().trim();
-        String localizacao = jTextFieldLocal.getText().trim();
+        String estilo = txtEstilo.getText().trim();
+        String localizacao = txtLocalizacao.getText().trim();
 
         try {
             artista.setEstilo(estilo);
@@ -134,9 +134,9 @@ public class TelaArtistaCadastro extends JFrame {
 
             // Artista novo ainda não existe no banco
             if (novo) {
-                controller.save(artista);
+                artistaController.save(artista);
             } else {
-                controller.update(artista);
+                artistaController.update(artista);
             }
 
             JOptionPane.showMessageDialog(
@@ -148,9 +148,9 @@ public class TelaArtistaCadastro extends JFrame {
             );
 
             if (novo) {
-                new TelaUsuarioListar(usuarioController, controller).setVisible(true);
+                new TelaUsuarioListar(usuarioController, artistaController).setVisible(true);
             } else {
-                new TelaArtistaListar(usuarioController, controller).setVisible(true);
+                new TelaArtistaListar(usuarioController, artistaController).setVisible(true);
             }
             this.dispose();
                 
@@ -173,15 +173,15 @@ public class TelaArtistaCadastro extends JFrame {
                 JOptionPane.ERROR_MESSAGE
             );
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextFieldEstilo;
-    private javax.swing.JTextField jTextFieldLocal;
+    private javax.swing.JTextField txtEstilo;
+    private javax.swing.JTextField txtLocalizacao;
     // End of variables declaration//GEN-END:variables
 }

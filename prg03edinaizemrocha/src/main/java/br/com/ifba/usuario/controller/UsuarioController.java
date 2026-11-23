@@ -51,7 +51,7 @@ public class UsuarioController implements UsuarioIController {
     }
 
     @Override
-    public List<Usuario> buscarPorNome(String nome) {
+    public List<Usuario> findByNome(String nome) {
         return service.buscarPorNome(nome);
     }
     

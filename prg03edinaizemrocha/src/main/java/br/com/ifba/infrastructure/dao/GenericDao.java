@@ -24,7 +24,7 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
     }
 
     // Único ponto que cria EntityManager
-    protected EntityManager criarEntityManager() {
+    protected EntityManager createEntityManager() {
         return JPAUtil.getEntityManager();
     }
 
@@ -33,7 +33,7 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
     }
 
     // Desfaz a transação se ela ainda estiver aberta
-    protected void reverter(EntityManager em) {
+    protected void rollback(EntityManager em) {
         if (em.getTransaction().isActive()) {
             em.getTransaction().rollback();
         }
@@ -41,13 +41,13 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
 
     @Override
     public void save(Entity entity) {
-        EntityManager em = criarEntityManager();
+        EntityManager em = createEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(entity);
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            reverter(em);
+            rollback(em);
             throw new DaoException("Erro ao salvar " + tipo.getSimpleName() + ".", e);
         } finally {
             em.close();
@@ -56,14 +56,14 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
 
     @Override
     public Entity update(Entity entity) {
-        EntityManager em = criarEntityManager();
+        EntityManager em = createEntityManager();
         try {
             em.getTransaction().begin();
             Entity atualizada = em.merge(entity);
             em.getTransaction().commit();
             return atualizada;
         } catch (RuntimeException e) {
-            reverter(em);
+            rollback(em);
             throw new DaoException("Erro ao atualizar " + tipo.getSimpleName() + ".", e);
         } finally {
             em.close();
@@ -72,7 +72,7 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
 
     @Override
     public void delete(Long id) {
-        EntityManager em = criarEntityManager();
+        EntityManager em = createEntityManager();
         try {
             em.getTransaction().begin();
             Entity existente = em.find(tipo, id);
@@ -82,7 +82,7 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
             em.remove(existente);
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            reverter(em);
+            rollback(em);
             throw new DaoException("Erro ao excluir " + tipo.getSimpleName() + ".", e);
         } finally {
             em.close();
@@ -91,7 +91,7 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
 
     @Override
     public Entity findById(Long id) {
-        EntityManager em = criarEntityManager();
+        EntityManager em = createEntityManager();
         try {
             return em.find(tipo, id);
         } catch (RuntimeException e) {
@@ -103,7 +103,7 @@ public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao
 
     @Override
     public List<Entity> findAll() {
-        EntityManager em = criarEntityManager();
+        EntityManager em = createEntityManager();
         try {
             return em.createQuery(
                     "SELECT e FROM " + tipo.getSimpleName() + " e", tipo)

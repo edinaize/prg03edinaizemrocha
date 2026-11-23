@@ -51,6 +51,6 @@ public class PerfilService implements PerfilIService {
 
     @Override
     public List<Perfil> buscarPorNomeUsuario(String nome) {
-        return dao.buscarPorNomeUsuario(nome);
+        return dao.findByNomeUsuario(nome);
     }
 }

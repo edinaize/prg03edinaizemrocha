@@ -21,7 +21,7 @@ public class PerfilDao extends GenericDao<Perfil> implements PerfilIDao {
 
     @Override
     public Perfil findByUsuarioId(long usuarioId) {
-        EntityManager em = criarEntityManager();
+        EntityManager em = createEntityManager();
 
         try {
             List<Perfil> perfis = em.createQuery(
@@ -39,8 +39,8 @@ public class PerfilDao extends GenericDao<Perfil> implements PerfilIDao {
     }
 
     @Override
-    public List<Perfil> buscarPorNomeUsuario(String nome) {
-        EntityManager em = criarEntityManager();
+    public List<Perfil> findByNomeUsuario(String nome) {
+        EntityManager em = createEntityManager();
         String termo = nome == null ? "" : nome.trim();
 
         try {

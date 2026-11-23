@@ -36,15 +36,15 @@
                               </Group>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextFieldEstilo" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldLocal" min="-2" pref="71" max="-2" attributes="0"/>
+                                  <Component id="txtEstilo" min="-2" pref="71" max="-2" attributes="0"/>
+                                  <Component id="txtLocalizacao" min="-2" pref="71" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCadastrar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="190" max="32767" attributes="0"/>
@@ -59,15 +59,15 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldEstilo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtEstilo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldLocal" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtLocalizacao" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnCadastrar" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="80" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -89,22 +89,22 @@
         <Property name="text" type="java.lang.String" value="Localiza&#xe7;&#xe2;o"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldEstilo">
+    <Component class="javax.swing.JTextField" name="txtEstilo">
       <Properties>
         <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldLocal">
+    <Component class="javax.swing.JTextField" name="txtLocalizacao">
       <Properties>
         <Property name="text" type="java.lang.String" value="jTextField2"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnCadastrar">
       <Properties>
         <Property name="text" type="java.lang.String" value="jButton1"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

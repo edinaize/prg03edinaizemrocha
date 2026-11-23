@@ -19,23 +19,23 @@ import javax.swing.table.DefaultTableModel;
 public class TelaArtistaListar extends javax.swing.JFrame {
     // Controller responsável pelo acesso aos dados do usuário 
     private final UsuarioIController usuarioController;
-    private final ArtistaIController controller;
+    private final ArtistaIController artistaController;
     
     public TelaArtistaListar(UsuarioIController usuarioController, ArtistaIController controller) {
         this.usuarioController = usuarioController;
-        this.controller = controller;
+        this.artistaController = controller;
         initComponents();
         configurarTabela();
         carregarArtistas();
     }
 
     private void configurarTabela() {
-        jTable1.getTableHeader().setBackground(new java.awt.Color(10,25,50));
-        jTable1.getTableHeader().setForeground(java.awt.Color.WHITE);
-        jTable1.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+        tblArtistas.getTableHeader().setBackground(new java.awt.Color(10,25,50));
+        tblArtistas.getTableHeader().setForeground(java.awt.Color.WHITE);
+        tblArtistas.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
 
         // Ícone de lápis
-        jTable1.getColumnModel().getColumn(5).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+        tblArtistas.getColumnModel().getColumn(5).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -51,7 +51,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
         });
         
         // Ícone de lixo
-        jTable1.getColumnModel().getColumn(4).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+        tblArtistas.getColumnModel().getColumn(4).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus,int row, int column) {
 
@@ -69,14 +69,14 @@ public class TelaArtistaListar extends javax.swing.JFrame {
         });
         
         // Oculta, só guarda o id de cada linha
-        jTable1.getColumnModel().getColumn(6).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
-        jTable1.getColumnModel().getColumn(6).setWidth(0);
+        tblArtistas.getColumnModel().getColumn(6).setMinWidth(0);
+        tblArtistas.getColumnModel().getColumn(6).setMaxWidth(0);
+        tblArtistas.getColumnModel().getColumn(6).setWidth(0);
     }
     
      private void carregarArtistas() {
         try {
-            preencherTabela(controller.findAll());
+            preencherTabela(artistaController.findAll());
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                     this, "Erro ao carregar artistas: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -86,7 +86,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
     // Preenche a tabela com os dados dos artistas.
     private void preencherTabela(List<Artista> artistas) {
         DefaultTableModel modelo =
-                (DefaultTableModel) jTable1.getModel();
+                (DefaultTableModel) tblArtistas.getModel();
 
         modelo.setRowCount(0);
 
@@ -113,7 +113,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
 
         try {
             // categoria nula = todas as categorias
-            preencherTabela(controller.pesquisar(busca, null));
+            preencherTabela(artistaController.pesquisar(busca, null));
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                 this, "Erro ao buscar artistas: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -128,7 +128,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         TextBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblArtistas = new javax.swing.JTable();
         jBuscar = new javax.swing.JButton();
         jBtcadastrar = new javax.swing.JButton();
 
@@ -140,7 +140,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
         TextBuscar.setText("Digite aqui...");
         TextBuscar.addActionListener(this::TextBuscarActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblArtistas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, "", "", null},
                 {null, null, null, null, null, null, null},
@@ -173,28 +173,28 @@ public class TelaArtistaListar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(35);
-        jTable1.setShowGrid(false);
-        jTable1.setShowHorizontalLines(true);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblArtistas.setRowHeight(35);
+        tblArtistas.setShowGrid(false);
+        tblArtistas.setShowHorizontalLines(true);
+        tblArtistas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tblArtistasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("NOME");
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("LOGIN");
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("EMAIL");
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("TIPO DE PERFIL");
-            jTable1.getColumnModel().getColumn(4).setHeaderValue("REMOVER");
-            jTable1.getColumnModel().getColumn(5).setHeaderValue("EDITAR");
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setHeaderValue("ID");
+        jScrollPane1.setViewportView(tblArtistas);
+        if (tblArtistas.getColumnModel().getColumnCount() > 0) {
+            tblArtistas.getColumnModel().getColumn(0).setResizable(false);
+            tblArtistas.getColumnModel().getColumn(0).setHeaderValue("NOME");
+            tblArtistas.getColumnModel().getColumn(1).setResizable(false);
+            tblArtistas.getColumnModel().getColumn(1).setHeaderValue("LOGIN");
+            tblArtistas.getColumnModel().getColumn(2).setResizable(false);
+            tblArtistas.getColumnModel().getColumn(2).setHeaderValue("EMAIL");
+            tblArtistas.getColumnModel().getColumn(3).setResizable(false);
+            tblArtistas.getColumnModel().getColumn(3).setHeaderValue("TIPO DE PERFIL");
+            tblArtistas.getColumnModel().getColumn(4).setHeaderValue("REMOVER");
+            tblArtistas.getColumnModel().getColumn(5).setHeaderValue("EDITAR");
+            tblArtistas.getColumnModel().getColumn(6).setResizable(false);
+            tblArtistas.getColumnModel().getColumn(6).setHeaderValue("ID");
         }
 
         jBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -266,20 +266,20 @@ public class TelaArtistaListar extends javax.swing.JFrame {
     }//GEN-LAST:event_jBuscarActionPerformed
 
     private void jBtcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtcadastrarActionPerformed
-        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario(usuarioController, controller);
+        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario(usuarioController, artistaController);
         telaCadastro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtcadastrarActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int linha = jTable1.rowAtPoint(evt.getPoint());
-        int coluna = jTable1.columnAtPoint(evt.getPoint());
+    private void tblArtistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArtistasMouseClicked
+        int linha = tblArtistas.rowAtPoint(evt.getPoint());
+        int coluna = tblArtistas.columnAtPoint(evt.getPoint());
 
         if (linha == -1) {
             return;
         }
 
-        long id = ((Number) jTable1.getValueAt(linha, 6)).longValue();
+        long id = ((Number) tblArtistas.getValueAt(linha, 6)).longValue();
 
         // Remover artista
         if (coluna == 4) {
@@ -288,7 +288,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
-                    controller.delete(id);
+                    artistaController.delete(id);
                     JOptionPane.showMessageDialog(this, "Artista removido com sucesso!");
                     pesquisarArtistas();
                 } catch (DaoException e) {
@@ -300,15 +300,15 @@ public class TelaArtistaListar extends javax.swing.JFrame {
 
         // Editar artista
         else if (coluna == 5) {
-            Artista artista = controller.findById(id);
+            Artista artista = artistaController.findById(id);
 
             if (artista != null) {
-                TelaArtistaCadastro tela = new TelaArtistaCadastro(usuarioController, controller, artista);
+                TelaArtistaCadastro tela = new TelaArtistaCadastro(usuarioController, artistaController, artista);
                 tela.setVisible(true);
                 this.dispose();
             }
         } // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tblArtistasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -318,7 +318,7 @@ public class TelaArtistaListar extends javax.swing.JFrame {
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblArtistas;
     // End of variables declaration//GEN-END:variables
 
 }

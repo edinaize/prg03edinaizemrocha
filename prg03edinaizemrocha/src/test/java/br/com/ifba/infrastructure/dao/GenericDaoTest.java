@@ -31,7 +31,7 @@ public class GenericDaoTest {
         // DAO que usa o EntityManager falso em vez do banco
         dao = new GenericDao<>(Usuario.class) {
             @Override
-            protected EntityManager criarEntityManager() {
+            protected EntityManager createEntityManager() {
                 return falso.criar();
             }
         };

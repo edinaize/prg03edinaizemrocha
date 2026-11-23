@@ -17,6 +17,6 @@ public interface PerfilIDao extends GenericIDao<Perfil> {
     Perfil findByUsuarioId(long usuarioId);
 
     // Busca por parte do nome do usuário, em ordem alfabética
-    List<Perfil> buscarPorNomeUsuario(String nome);
+    List<Perfil> findByNomeUsuario(String nome);
     
 }
