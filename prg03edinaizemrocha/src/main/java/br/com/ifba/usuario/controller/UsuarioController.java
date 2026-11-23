@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.controller;
 
+import br.com.ifba.usuario.entity.TipoPerfil;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioIService;
 import java.util.List;
@@ -58,4 +59,15 @@ public class UsuarioController implements UsuarioIController {
     public void validar(Usuario usuario) {
         service.validar(usuario);
     }
+
+    @Override
+    public Usuario criarUsuario(TipoPerfil tipo, String nome, String login, String senha) {
+        return service.criarUsuario(tipo, nome, login, senha);
+    }
+
+    @Override
+    public void preencherDadosPessoais(Usuario usuario, String genero, String dataNascimento, String telefone, String email) {
+        service.preencherDadosPessoais(usuario, genero, dataNascimento, telefone, email);
+    }
+    
 }

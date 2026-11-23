@@ -47,7 +47,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jButton1.setText("Salvar alterações");
 
         txtNome.setText(usuario.getNome());
-        cmbTipoPerfil.setSelectedItem(usuario.getTipoPerfil() == TipoPerfil.ARTISTA ? "Artista" : "Espectador");
+        cmbTipoPerfil.setSelectedItem(usuario.getTipoPerfil().getRotuloTela());
         cmbTipoPerfil.setEnabled(false);
         cmbGenero.setSelectedItem(usuario.getGenero());
         txtDataNascimento.setText(usuario.getDataNascimento());
@@ -267,9 +267,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         } else {
 
             try {
-                Usuario usuario;
+                
                 boolean editando = usuarioEdicao != null;
-
+                Usuario usuario;
+                
                 if (editando) {
                     usuario = usuarioEdicao;
 
@@ -279,18 +280,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     if (!senha.isEmpty()) {
                         usuario.setSenha(senha);
                     }
-                } else if (tipoPerfil.equals("Artista")) {
-                    // Perfil de artista: cria um Artista que também é um Usuario
-                    usuario = new Artista(nome, login, senha);
-
                 } else {
-                    usuario = new Usuario(nome, login, senha);
+                    usuario = controller.criarUsuario(TipoPerfil.porRotuloTela(tipoPerfil), nome, login, senha);
                 }
-
-                usuario.setGenero(genero);
-                usuario.setDataNascimento(dataNascimento);
-                usuario.setTelefone(telefone);
-                usuario.setEmail(email.trim().isEmpty() ? null : email.trim());
+                controller.preencherDadosPessoais(usuario, genero, dataNascimento, telefone, email);
 
                 if (editando) {
                     controller.update(usuario);
@@ -314,8 +307,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
                 );
 
-                new TelaUsuarioListar(controller, artistaController).setVisible(true);
-                this.dispose();
+                abrirListagem();
 
             } catch (UsuarioInvalidoException e) {
                 JOptionPane.showMessageDialog(
@@ -340,6 +332,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         }   
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void abrirListagem() {
+        new TelaUsuarioListar(controller, artistaController).setVisible(true);
+        this.dispose();
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Abre a tela de login
         TelaLogin telaLogin = new TelaLogin(controller, artistaController);

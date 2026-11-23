@@ -4,7 +4,9 @@
  */
 package br.com.ifba.usuario.service;
 
+import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.usuario.dao.UsuarioIDao;
+import br.com.ifba.usuario.entity.TipoPerfil;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
@@ -72,5 +74,23 @@ public class UsuarioService implements UsuarioIService {
     @Override
     public List<Usuario> buscarPorNome(String nome) {
         return dao.buscarPorNome(nome);
+    }
+
+    @Override
+    public Usuario criarUsuario(TipoPerfil tipo, String nome, String login, String senha) {
+        if (tipo == TipoPerfil.ARTISTA) {
+            return new Artista(nome, login, senha);
+        }
+        return new Usuario(nome, login, senha);
+    }
+
+    @Override
+    public void preencherDadosPessoais(Usuario usuario, String genero,
+        String dataNascimento, String telefone, String email) {
+        
+        usuario.setGenero(genero);
+        usuario.setDataNascimento(dataNascimento);
+        usuario.setTelefone(telefone);
+        usuario.setEmail(email.trim().isEmpty() ? null : email.trim());
     }
 }
