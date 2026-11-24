@@ -62,7 +62,7 @@ public class ArtistaService implements ArtistaIService {
 
     @Override
     public List<Artista> pesquisar(String nome, CategoriaObra categoria) {
-        return dao.pesquisar(nome, categoria);
+        return dao.search(nome, categoria);
     }
     
 }

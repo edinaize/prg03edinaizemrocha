@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface ArtistaIDao extends GenericIDao<Artista> {
     // Busca por parte do nome e, opcionalmente, por categoria de obra
-    List<Artista> pesquisar(String nome, CategoriaObra categoria);
+    List<Artista> search(String nome, CategoriaObra categoria);
     
 }

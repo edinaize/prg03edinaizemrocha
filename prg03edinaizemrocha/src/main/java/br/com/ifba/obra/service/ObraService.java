@@ -4,7 +4,6 @@
  */
 package br.com.ifba.obra.service;
 
-import br.com.ifba.obra.dao.ObraDao;
 import br.com.ifba.obra.dao.ObraIDao;
 import br.com.ifba.obra.entity.CategoriaObra;
 import br.com.ifba.obra.entity.Obra;

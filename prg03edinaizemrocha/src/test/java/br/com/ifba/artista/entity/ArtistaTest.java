@@ -4,6 +4,7 @@
  */
 package br.com.ifba.artista.entity;
 
+import br.com.ifba.artista.validar.ValidadorArtista;
 import br.com.ifba.login.view.TelaLogin;
 import br.com.ifba.obra.entity.Obra;
 import br.com.ifba.usuario.entity.Usuario;
@@ -30,23 +31,6 @@ public class ArtistaTest {
         assertEquals(1, artista.getObras().size());
     }
     
-    // Testa o método herdado de Usuario
-    /*    @Test
-    void artista_autenticar_usaMetodoHerdadoDeUsuario_retornaTrue() {
-    Artista artista = new Artista("Ariana", "52998224725", "ariana_artista", "senha123");
-    
-    assertTrue(artista.autenticar("ariana_artista", "senha123"));
-    }
-    
-    // Testa o método herdado com senha incorreta
-    @Test
-    void artista_autenticar_usaMetodoHerdadoDeUsuario_retornaFalse() {
-    Artista artista = new Artista("Ariana", "52998224725", "ariana_artista", "senha123");
-    
-    assertFalse(artista.autenticar("ariana_artista", "senhaErrada"));
-    }*/
-
-    // Testa o método sobrescrito por Artista
     @Test
     void artista_descreverPerfil_retornaDescricaoPropria() {
         Artista artista = new Artista("Ariana", "ariana_artista", "senha123");
@@ -71,22 +55,6 @@ public class ArtistaTest {
 
         assertTrue(artista.autenticar("bruno_artista", "senha123"));
     }
-
-    @Test
-    void artista_autenticar_semEstilo_retornaFalse() {
-        Artista artista = new Artista("Bruno", "bruno_artista", "senha123");
-
-        assertFalse(artista.autenticar("bruno_artista", "senha123"));
-    }
-
-    @Test
-    void mesmasCredenciais_usuarioEArtista_produzemResultadosDiferentes() {
-        Usuario usuario = new Usuario("Ana", "ana", "senha123");
-
-        Artista artista = new Artista("Ana", "ana", "senha123");
-
-        assertNotEquals(usuario.autenticar("ana", "senha123"), artista.autenticar("ana", "senha123"));
-    }
     
     @Test
     void processar_comUsuario_retornaTrue() {
@@ -107,10 +75,17 @@ public class ArtistaTest {
     }
 
     @Test
-    void processar_comArtistaSemEstilo_retornaFalse() {
-        Autenticavel pessoa = new Artista(
-                "Bruno", "bruno_artista", "senha123");
+    void estiloValido_comTexto_retornaTrue() {
+        assertTrue(ValidadorArtista.estiloValido("Impressionismo"));
+    }
 
-        assertFalse( TelaLogin.processar(pessoa, "bruno_artista", "senha123"));
+    @Test
+    void estiloValido_nulo_retornaFalse() {
+        assertFalse(ValidadorArtista.estiloValido(null));
+    }
+
+    @Test
+    void estiloValido_soEspacos_retornaFalse() {
+        assertFalse(ValidadorArtista.estiloValido("   "));
     }
 }

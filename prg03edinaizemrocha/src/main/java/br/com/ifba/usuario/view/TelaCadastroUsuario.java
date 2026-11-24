@@ -22,7 +22,7 @@ import br.com.ifba.usuario.exception.UsuarioInvalidoException;
  */
 public class TelaCadastroUsuario extends javax.swing.JFrame {
     
-    private final UsuarioIController controller;
+    private final UsuarioIController usuarioController;
     private final ArtistaIController artistaController;
     private Usuario usuarioEdicao = null;
     
@@ -33,7 +33,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
      * @param artistaController
      */
     public TelaCadastroUsuario(UsuarioIController controller, ArtistaIController artistaController) {
-        this.controller = controller;
+        this.usuarioController = controller;
         this.artistaController = artistaController;
         initComponents();
     }
@@ -43,11 +43,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         
         usuarioEdicao = usuario;
 
-        jLabel10.setText("Editar usuário:");
-        jButton1.setText("Salvar alterações");
+        lblTitulo.setText("Editar usuário:");
+        btnCadastrar.setText("Salvar alterações");
 
         txtNome.setText(usuario.getNome());
-        cmbTipoPerfil.setSelectedItem(usuario.getTipoPerfil() == TipoPerfil.ARTISTA ? "Artista" : "Espectador");
+        cmbTipoPerfil.setSelectedItem(usuario.getTipoPerfil().getRotuloTela());
         cmbTipoPerfil.setEnabled(false);
         cmbGenero.setSelectedItem(usuario.getGenero());
         txtDataNascimento.setText(usuario.getDataNascimento());
@@ -77,8 +77,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtNome = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -88,7 +88,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         txtLogin = new javax.swing.JTextPane();
         cmbGenero = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
         txtConfirmarSenha = new javax.swing.JPasswordField();
         txtDataNascimento = new javax.swing.JFormattedTextField();
@@ -123,13 +123,13 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Confirmar Senha:");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Cadastrar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnCadastrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         jScrollPane3.setViewportView(txtNome);
 
@@ -141,8 +141,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 
         cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Feminino", "Masculino", "Não-Binário", "Prefiro não informar" }));
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setText("Faça o seu cadastro:");
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTitulo.setText("Faça o seu cadastro:");
 
         txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         txtDataNascimento.addActionListener(this::txtDataNascimentoActionPerformed);
@@ -155,15 +155,15 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
-                .addComponent(jButton1)
+                .addComponent(btnCadastrar)
                 .addGap(39, 39, 39)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
+                        .addComponent(lblTitulo)
                         .addContainerGap(228, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +193,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel10)
+                .addComponent(lblTitulo)
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
@@ -235,15 +235,15 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     .addComponent(txtConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnCadastrar)
+                    .addComponent(btnCancelar))
                 .addGap(58, 58, 58))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // Captura os dados digitados
         String nome = txtNome.getText();
         String tipoPerfil = cmbTipoPerfil.getSelectedItem().toString();
@@ -267,9 +267,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         } else {
 
             try {
-                Usuario usuario;
+                
                 boolean editando = usuarioEdicao != null;
-
+                Usuario usuario;
+                
                 if (editando) {
                     usuario = usuarioEdicao;
 
@@ -279,31 +280,23 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     if (!senha.isEmpty()) {
                         usuario.setSenha(senha);
                     }
-                } else if (tipoPerfil.equals("Artista")) {
-                    // Perfil de artista: cria um Artista que também é um Usuario
-                    usuario = new Artista(nome, login, senha);
-
                 } else {
-                    usuario = new Usuario(nome, login, senha);
+                    usuario = usuarioController.criarUsuario(TipoPerfil.porRotuloTela(tipoPerfil), nome, login, senha);
                 }
-
-                usuario.setGenero(genero);
-                usuario.setDataNascimento(dataNascimento);
-                usuario.setTelefone(telefone);
-                usuario.setEmail(email.trim().isEmpty() ? null : email.trim());
+                usuarioController.preencherDadosPessoais(usuario, genero, dataNascimento, telefone, email);
 
                 if (editando) {
-                    controller.update(usuario);
+                    usuarioController.update(usuario);
                 } else if (usuario instanceof Artista) {
                     
                     // valida antes de seguir; a tela do artista é quem salva no banco
-                    controller.validar(usuario);
-                    new TelaArtistaCadastro(controller, artistaController, (Artista) usuario).setVisible(true);
+                    usuarioController.validar(usuario);
+                    new TelaArtistaCadastro(usuarioController, artistaController, (Artista) usuario).setVisible(true);
                     this.dispose();
                     return;
 
                 } else {
-                    controller.save(usuario);
+                    usuarioController.save(usuario);
                 }
 
                 JOptionPane.showMessageDialog(
@@ -314,8 +307,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
                 );
 
-                new TelaUsuarioListar(controller, artistaController).setVisible(true);
-                this.dispose();
+                abrirListagem();
 
             } catch (UsuarioInvalidoException e) {
                 JOptionPane.showMessageDialog(
@@ -338,17 +330,22 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 );
             }
         }   
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void abrirListagem() {
+        new TelaUsuarioListar(usuarioController, artistaController).setVisible(true);
+        this.dispose();
+    }
+    
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // Abre a tela de login
-        TelaLogin telaLogin = new TelaLogin(controller, artistaController);
+        TelaLogin telaLogin = new TelaLogin(usuarioController, artistaController);
         telaLogin.setVisible(true);
         
         // Fecha a tela de cadastro
         this.dispose();  
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataNascimentoActionPerformed
         // TODO add your handling code here:
@@ -358,12 +355,11 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cmbGenero;
     private javax.swing.JComboBox<String> cmbTipoPerfil;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -376,6 +372,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JPasswordField txtConfirmarSenha;
     private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JTextPane txtEmail;

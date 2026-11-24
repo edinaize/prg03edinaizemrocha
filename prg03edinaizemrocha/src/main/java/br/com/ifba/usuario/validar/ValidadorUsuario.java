@@ -23,31 +23,7 @@ public class ValidadorUsuario {
         return true;
     }
  
-    // Valida CPF
-    public static boolean cpfValido(String cpf) {
-      
-        if (cpf == null) {
-            return false;
-        }
-
-        // Remove pontos e traço, deixando só o que sobrou
-        String digitos = cpf.replaceAll("[^0-9]", "");
-
-        // Se o tamanho mudou depois de remover só pontuação, é porque tinha letra ou símbolo
-        if (digitos.length() != cpf.replaceAll("[.\\-]", "").length()) {
-            return false;
-        }
-
-        // CPF precisa ter exatamente 11 números
-        if (digitos.length() != 11) {
-            return false;
-        }
-        // CPF com todos os dígitos iguais não são válidos
-        return digitos.chars().distinct().count() != 1;
-    }
- 
-    // Verifica se a senha atinge o tamanho mínimo exigido
-    public static boolean senhaForte(String senha) {
+    public static boolean senhaTemTamanhoMinimo(String senha) {
     
         return senha != null && senha.length() >= 6;
     }

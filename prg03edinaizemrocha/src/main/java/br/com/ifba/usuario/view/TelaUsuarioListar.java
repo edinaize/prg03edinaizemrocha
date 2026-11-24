@@ -17,11 +17,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class TelaUsuarioListar extends javax.swing.JFrame {
     // Controller responsável pelo acesso aos dados do usuário
-    private final  UsuarioIController controller;
+    private final  UsuarioIController usuarioController;
     private final ArtistaIController artistaController;
     
     public TelaUsuarioListar(UsuarioIController controller, ArtistaIController artistaController) {
-        this.controller = controller;
+        this.usuarioController = controller;
         this.artistaController = artistaController;
         initComponents();
         configurarTabela();
@@ -29,12 +29,12 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     }
 
     private void configurarTabela() {
-        jTable1.getTableHeader().setBackground(new java.awt.Color(10,25,50));
-        jTable1.getTableHeader().setForeground(java.awt.Color.WHITE);
-        jTable1.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+        tblUsuarios.getTableHeader().setBackground(new java.awt.Color(10,25,50));
+        tblUsuarios.getTableHeader().setForeground(java.awt.Color.WHITE);
+        tblUsuarios.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
 
         // Ícone de lápis
-        jTable1.getColumnModel().getColumn(5).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+        tblUsuarios.getColumnModel().getColumn(5).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -50,7 +50,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
         });
         
         // Ícone de lixo
-        jTable1.getColumnModel().getColumn(4).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+        tblUsuarios.getColumnModel().getColumn(4).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus,int row, int column) {
 
@@ -68,15 +68,15 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
         });
         
         // Oculta, só guarda o id de cada linha
-        jTable1.getColumnModel().getColumn(6).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
-        jTable1.getColumnModel().getColumn(6).setWidth(0);
+        tblUsuarios.getColumnModel().getColumn(6).setMinWidth(0);
+        tblUsuarios.getColumnModel().getColumn(6).setMaxWidth(0);
+        tblUsuarios.getColumnModel().getColumn(6).setWidth(0);
     }
     
     // Busca os usuários cadastrados no banco.
     private void carregarUsuarios() {
         try {
-            preencherTabela(controller.findAll());
+            preencherTabela(usuarioController.findAll());
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                     this, "Erro ao carregar usuários: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -86,7 +86,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     // Preenche a tabela com os dados dos usuários.
     private void preencherTabela(List<Usuario> usuarios) {
         DefaultTableModel modelo =
-                (DefaultTableModel) jTable1.getModel();
+                (DefaultTableModel) tblUsuarios.getModel();
 
         modelo.setRowCount(0);
 
@@ -112,7 +112,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
         }
 
         try {
-            preencherTabela(controller.buscarPorNome(busca));
+            preencherTabela(usuarioController.findByNome(busca));
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(
                 this, "Erro ao buscar usuários: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -127,7 +127,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         TextBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblUsuarios = new javax.swing.JTable();
         jBuscar = new javax.swing.JButton();
         jBtcadastrar = new javax.swing.JButton();
 
@@ -139,7 +139,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
         TextBuscar.setText("Digite aqui...");
         TextBuscar.addActionListener(this::TextBuscarActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, "", "", null},
                 {null, null, null, null, null, null, null},
@@ -172,28 +172,28 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(35);
-        jTable1.setShowGrid(false);
-        jTable1.setShowHorizontalLines(true);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblUsuarios.setRowHeight(35);
+        tblUsuarios.setShowGrid(false);
+        tblUsuarios.setShowHorizontalLines(true);
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tblUsuariosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("NOME");
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("LOGIN");
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("EMAIL");
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("TIPO DE PERFIL");
-            jTable1.getColumnModel().getColumn(4).setHeaderValue("REMOVER");
-            jTable1.getColumnModel().getColumn(5).setHeaderValue("EDITAR");
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setHeaderValue("ID");
+        jScrollPane1.setViewportView(tblUsuarios);
+        if (tblUsuarios.getColumnModel().getColumnCount() > 0) {
+            tblUsuarios.getColumnModel().getColumn(0).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(0).setHeaderValue("NOME");
+            tblUsuarios.getColumnModel().getColumn(1).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(1).setHeaderValue("LOGIN");
+            tblUsuarios.getColumnModel().getColumn(2).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(2).setHeaderValue("EMAIL");
+            tblUsuarios.getColumnModel().getColumn(3).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(3).setHeaderValue("TIPO DE PERFIL");
+            tblUsuarios.getColumnModel().getColumn(4).setHeaderValue("REMOVER");
+            tblUsuarios.getColumnModel().getColumn(5).setHeaderValue("EDITAR");
+            tblUsuarios.getColumnModel().getColumn(6).setResizable(false);
+            tblUsuarios.getColumnModel().getColumn(6).setHeaderValue("ID");
         }
 
         jBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -265,20 +265,20 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     }//GEN-LAST:event_jBuscarActionPerformed
 
     private void jBtcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtcadastrarActionPerformed
-        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario(controller, artistaController);
+        TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario(usuarioController, artistaController);
         telaCadastro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtcadastrarActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int linha = jTable1.rowAtPoint(evt.getPoint());
-        int coluna = jTable1.columnAtPoint(evt.getPoint());
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        int linha = tblUsuarios.rowAtPoint(evt.getPoint());
+        int coluna = tblUsuarios.columnAtPoint(evt.getPoint());
 
         if (linha == -1) {
             return;
         }
 
-        long id = ((Number) jTable1.getValueAt(linha, 6)).longValue();
+        long id = ((Number) tblUsuarios.getValueAt(linha, 6)).longValue();
 
         // Remover usuário
         if (coluna == 4) {
@@ -287,7 +287,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
-                    controller.delete(id);
+                    usuarioController.delete(id);
                     JOptionPane.showMessageDialog(this, "Usuário removido com sucesso!");
                     pesquisarUsuarios();
                 } catch (DaoException e) {
@@ -299,15 +299,15 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
 
         // Editar usuário
         else if (coluna == 5) {
-            Usuario usuario = controller.findById(id);
+            Usuario usuario = usuarioController.findById(id);
 
             if (usuario != null) {
-                TelaCadastroUsuario tela = new TelaCadastroUsuario(controller, artistaController, usuario);
+                TelaCadastroUsuario tela = new TelaCadastroUsuario(usuarioController, artistaController, usuario);
                 tela.setVisible(true);
                 this.dispose();
             }
         } // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tblUsuariosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,7 +317,7 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblUsuarios;
     // End of variables declaration//GEN-END:variables
 
 }

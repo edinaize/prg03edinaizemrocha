@@ -5,6 +5,7 @@
 package br.com.ifba.login.view;
 
 import br.com.ifba.artista.controller.ArtistaIController;
+import br.com.ifba.infrastructure.exception.DaoException;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.view.TelaCadastroUsuario;
 import br.com.ifba.usuario.entity.Usuario;
@@ -161,23 +162,24 @@ public class TelaLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenhaActionPerformed
 
-    // Método chamado ao clicar o botão de entrar
+    
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        // 1 Captura o que foi digitado nos campos
+        
         String loginDigitado = txtLogin.getText();
         String senhaDigitada = new String(txtSenha.getPassword());
-
-        // Cria o objeto Usuario com os dados de login
-        Usuario usuario = new Usuario();
-        // Cria o objeto Usuario de teste, com dados fixos
-        usuario.setLogin("Edinaize");
-        usuario.setSenha("12345");
         
-        // Armazena o resultado da autenticação
-        boolean autenticado = processar(usuario, loginDigitado, senhaDigitada);
         
-        // Exibe o que foi digitado
         txtResultado.setText( "Login digitado: " + loginDigitado + "\n" + "Senha digitada: " + senhaDigitada);
+        
+        boolean autenticado;
+        try {
+            Usuario usuario = usuarioController.findByLogin(loginDigitado);
+            autenticado = usuario != null && processar(usuario, loginDigitado, senhaDigitada);
+        } catch (DaoException e) {
+            JOptionPane.showMessageDialog(this,
+                "Não foi possível consultar o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
         if (autenticado) {JOptionPane.showMessageDialog(this, "Acesso liberado!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
         
