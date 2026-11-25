@@ -16,13 +16,12 @@ import br.com.ifba.usuario.validar.ValidadorUsuario;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author edina
  */
-@Component
+
 public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private final UsuarioIController usuarioController;
