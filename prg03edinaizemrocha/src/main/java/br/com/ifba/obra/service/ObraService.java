@@ -8,11 +8,13 @@ import br.com.ifba.obra.dao.ObraIDao;
 import br.com.ifba.obra.entity.CategoriaObra;
 import br.com.ifba.obra.entity.Obra;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author edina
  */
+@Service
 public class ObraService implements ObraIService {
     private final ObraIDao dao;
     

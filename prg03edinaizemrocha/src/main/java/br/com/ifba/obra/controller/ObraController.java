@@ -8,11 +8,13 @@ import br.com.ifba.obra.entity.CategoriaObra;
 import br.com.ifba.obra.entity.Obra;
 import br.com.ifba.obra.service.ObraIService;
 import java.util.List;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author edina
  */
+@Controller
 public class ObraController implements ObraIController {
     private final ObraIService service;
     

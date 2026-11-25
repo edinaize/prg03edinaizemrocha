@@ -12,9 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+//import org.springframework.stereotype.Component;
 
 
-
+@org.springframework.stereotype.Component
 public class TelaUsuarioListar extends javax.swing.JFrame {
     // Controller responsável pelo acesso aos dados do usuário
     private final  UsuarioIController usuarioController;

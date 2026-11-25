@@ -9,11 +9,13 @@ import br.com.ifba.infrastructure.exception.DaoException;
 import br.com.ifba.perfil.entity.Perfil;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author edina
  */
+@Repository
 public class PerfilDao extends GenericDao<Perfil> implements PerfilIDao {
     public PerfilDao() {
         super(Perfil.class);

@@ -1,4 +1,7 @@
+package br.com.ifba;
 
+
+import br.com.ifba.infrastructure.util.FlywayUtil;
 import br.com.ifba.login.view.TelaLogin;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -17,6 +20,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class ProjetoApplication {
 
     public static void main(String[] args) {
+        FlywayUtil.migrar();
+        
         ConfigurableApplicationContext context =
                 new SpringApplicationBuilder(ProjetoApplication.class)
                         .headless(false)

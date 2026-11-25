@@ -12,11 +12,13 @@ import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import br.com.ifba.usuario.view.TelaUsuarioListar;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author edina
  */
+@Component
 public class TelaArtistaCadastro extends JFrame {
     // Controller responsável pelo acesso aos dados do artista
     private final UsuarioIController usuarioController;

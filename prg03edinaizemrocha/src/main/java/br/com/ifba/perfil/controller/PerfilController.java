@@ -7,11 +7,13 @@ package br.com.ifba.perfil.controller;
 import br.com.ifba.perfil.entity.Perfil;
 import br.com.ifba.perfil.service.PerfilIService;
 import java.util.List;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author edina
  */
+@Controller
 public class PerfilController implements PerfilIController {
     private final PerfilIService service;
     

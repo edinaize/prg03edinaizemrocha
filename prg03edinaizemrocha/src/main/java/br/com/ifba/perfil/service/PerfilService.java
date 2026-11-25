@@ -7,11 +7,13 @@ package br.com.ifba.perfil.service;
 import br.com.ifba.perfil.dao.PerfilIDao;
 import br.com.ifba.perfil.entity.Perfil;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author edina
  */
+@Service
 public class PerfilService implements PerfilIService {
     private final PerfilIDao dao;
     

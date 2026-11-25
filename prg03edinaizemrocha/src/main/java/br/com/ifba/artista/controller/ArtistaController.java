@@ -8,11 +8,13 @@ import br.com.ifba.artista.entity.Artista;
 import br.com.ifba.artista.service.ArtistaIService;
 import br.com.ifba.obra.entity.CategoriaObra;
 import java.util.List;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author edina
  */
+@Controller
 public class ArtistaController implements ArtistaIController {
     private final ArtistaIService service;
     
