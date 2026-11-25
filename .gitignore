@@ -1,4 +1,6 @@
 target/
 **/target/
 **/src/main/resources/META-INF/persistence.xml
+**/src/main/resources/application.properties
+!**/src/main/resources/application.properties.exemplo
 !**/src/main/resources/META-INF/persistence.xml.exemplo
