@@ -15,11 +15,13 @@ import javax.swing.JOptionPane;
 import br.com.ifba.usuario.validar.ValidadorUsuario;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author edina
  */
+
 public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private final UsuarioIController usuarioController;
@@ -32,6 +34,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
      * @param controller
      * @param artistaController
      */
+    @Autowired
     public TelaCadastroUsuario(UsuarioIController controller, ArtistaIController artistaController) {
         this.usuarioController = controller;
         this.artistaController = artistaController;

@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 
+@org.springframework.stereotype.Component
 public class TelaArtistaListar extends javax.swing.JFrame {
     // Controller responsável pelo acesso aos dados do usuário 
     private final UsuarioIController usuarioController;

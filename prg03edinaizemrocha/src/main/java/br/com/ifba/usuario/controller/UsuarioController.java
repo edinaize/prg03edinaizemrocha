@@ -8,11 +8,13 @@ import br.com.ifba.usuario.entity.TipoPerfil;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioIService;
 import java.util.List;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author edina
  */
+@Controller
 public class UsuarioController implements UsuarioIController {
     private final UsuarioIService service;
     

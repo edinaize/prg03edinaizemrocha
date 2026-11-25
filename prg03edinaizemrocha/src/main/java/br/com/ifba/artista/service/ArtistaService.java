@@ -11,11 +11,13 @@ import br.com.ifba.obra.entity.CategoriaObra;
 import br.com.ifba.usuario.exception.UsuarioInvalidoException;
 import br.com.ifba.usuario.service.UsuarioIService;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author edina
  */
+@Service
 public class ArtistaService implements ArtistaIService {
     private final ArtistaIDao dao;
     private final UsuarioIService usuarioService;

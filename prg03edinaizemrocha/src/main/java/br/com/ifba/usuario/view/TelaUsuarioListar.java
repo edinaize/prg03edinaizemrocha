@@ -1,7 +1,9 @@
 package br.com.ifba.usuario.view;
 
+import br.com.ifba.ProjetoApplication;
 import br.com.ifba.artista.controller.ArtistaIController;
 import br.com.ifba.infrastructure.exception.DaoException;
+import br.com.ifba.infrastructure.util.FlywayUtil;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 import java.awt.Component;
@@ -12,9 +14,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+//import org.springframework.stereotype.Component;
 
 
-
+@org.springframework.stereotype.Component
 public class TelaUsuarioListar extends javax.swing.JFrame {
     // Controller responsável pelo acesso aos dados do usuário
     private final  UsuarioIController usuarioController;
@@ -308,7 +313,19 @@ public class TelaUsuarioListar extends javax.swing.JFrame {
             }
         } // TODO add your handling code here:
     }//GEN-LAST:event_tblUsuariosMouseClicked
+    
+    public static void main(String[] args) {
+        FlywayUtil.migrar();
 
+        ConfigurableApplicationContext context =
+                new SpringApplicationBuilder(ProjetoApplication.class)
+                        .headless(false)
+                        .run(args);
+
+        // Antes: TelaLogin tela = context.getBean(TelaLogin.class);
+        TelaUsuarioListar tela = context.getBean(TelaUsuarioListar.class);
+        tela.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TextBuscar;

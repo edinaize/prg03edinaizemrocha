@@ -11,10 +11,12 @@ import br.com.ifba.usuario.view.TelaCadastroUsuario;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.interfaces.Autenticavel;
 import javax.swing.JOptionPane;
+import org.springframework.stereotype.Component;
 /**
  *
  * @author edina
  */
+@Component
 public class TelaLogin extends javax.swing.JFrame {
     
     private final UsuarioIController usuarioController;
